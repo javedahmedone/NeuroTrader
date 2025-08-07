@@ -1,0 +1,56 @@
+.orders-container {
+  padding: 16px;
+  font-family: sans-serif;
+}
+
+.badge {
+  background: #e4e9ff;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-left: 6px;
+  color: #4b4eff;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: white;
+  border: 1px solid #ddd;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #eaeaea;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.orders-table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #444;
+}
+
+.profit {
+  color: green;
+}
+
+.loss {
+  color: red;
+}
+
+.tpin-alert {
+  margin-top: 10px;
+  background-color: #fff7e5;
+  color: #a6761d;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}

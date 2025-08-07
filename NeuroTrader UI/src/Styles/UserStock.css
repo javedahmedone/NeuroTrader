@@ -1,0 +1,49 @@
+.stock_dashboard {
+  width: 50%; /* or any desired width */
+  margin: auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* Centering on screen */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.section.gainers {
+  padding: 10px;
+}
+
+.gainers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.stock {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.info span {
+  display: block;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.price .gain {
+  color: green;
+  font-weight: bold;
+}
+
+
+.w_full {
+  width: 100%;
+} 

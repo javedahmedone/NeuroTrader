@@ -1,0 +1,547 @@
+body {
+  background-color: #fff;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+
+/* Summary Top Cards */
+
+.summary-card h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.title {
+  font-size: 14px;
+  color: #bbb;
+}
+
+.subtext {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
+}
+
+.positive h2,
+.green {
+  color: #00ff88;
+}
+
+.red {
+  color: #ff4c4c;
+}
+
+/* Main Grid */
+.main-section {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Holdings */
+.holdings {
+  flex: 2;
+  background: white;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+
+.stock-info p {
+  margin: 4px 0;
+}
+
+.stock-metrics {
+  text-align: right;
+}
+
+.stock-metrics p {
+  margin: 4px 0;
+}
+
+/* Quick Actions */
+.actions {
+  flex: 1;
+  background: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.actions h3 {
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.green {
+  background-color: #28a745;
+}
+
+.red {
+  background-color: #dc3545;
+}
+
+.text_blue {
+  background-color: #007bff;
+}
+
+
+.gainers-losers-section {
+  display: flex;
+  gap: 20px;
+}
+
+.gainers-box, .losers-box {
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #111;
+  color: white;
+}
+
+.gainers-title {
+  color: #00ff88;
+  margin-bottom: 16px;
+}
+
+.losers-title {
+  color: #ff4c4c;
+  margin-bottom: 16px;
+}
+
+.stock-card {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #444;
+  padding: 16px;
+  border-radius: 10px;
+  background: #181818;
+  margin-bottom: 12px;
+}
+
+.symbol {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.name {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.price {
+  text-align: right;
+  font-weight: bold;
+}
+
+.green {
+  color: #00ff88;
+  font-size: 14px;
+}
+
+.red {
+  color: #ff4c4c;
+  font-size: 14px;
+}
+
+.up-icon, .down-icon {
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+
+.portfolio-container {
+  padding: 40px;
+  background: #f9f9fb;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #111;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.summary-card {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  gap: 12px;
+  transition: transform 0.2s ease;
+  margin-bottom: 30px;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Icons */
+.summary-card .icon {
+  font-size: 28px;
+  margin-right: 10px;
+}
+
+/* Card Types */
+
+
+.position-card {
+  background: #f6f0ff;
+  color: #7c3aed;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.subtext {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.green {
+  color: #10b981;
+}
+
+.purple {
+  color: #9333ea;
+}
+
+.bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+.to-indigo-100 {
+    --tw-gradient-to: #e0e7ff var(--tw-gradient-to-position);
+}
+.to-green-100 {
+    --tw-gradient-to: #dcfce7 var(--tw-gradient-to-position);
+}
+
+.border {
+    border-width: 1px;
+}
+
+
+:root {
+  --radius: 0.5rem; /* You can adjust this globally */
+}
+
+.rounded-lg {
+  border-radius: var(--radius);
+}
+
+/* Optional extras if you want to apply rounded corners only to specific sides */
+
+.rounded-t-lg {
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+.rounded-b-lg {
+  border-bottom-left-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+.rounded-l-lg {
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+}
+
+.rounded-r-lg {
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+
+.from-blue-50 {
+    --tw-gradient-from: #eff6ff var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(239 246 255 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.bg_blue {
+    background: rgb(227, 233, 255);
+}
+
+.br_10px{
+    border-radius: 10px;
+}
+
+.blue{  
+    
+    color:#2563eb
+}
+
+.text_black {
+    color: #000;
+}
+
+.change-card {
+  background-color: #d1fae5; /* light green */
+  border-radius: 10px;
+  padding: 16px;
+  width: 260px;
+  border: 1px solid #86efac; /* green border */
+  font-family: sans-serif;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.icon {
+  font-size: 24px;
+  color: #10b981; /* green-500 */
+}
+
+.title {
+  color: #047857; /* green-700 */
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.amount {
+  font-size: 26px;
+  font-weight: bold;
+  color: #000;
+}
+
+.percent {
+  color: #10b981;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.portfolio-card {
+  background: linear-gradient(to bottom right, #ebf4ff, #dbeafe); /* light blue gradient */
+  border-radius: 10px;
+  padding: 16px;
+  width: 260px;
+  border: 1px solid #bfdbfe;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  font-family: sans-serif;
+}
+
+
+.icon {
+  font-size: 28px;
+  color: #2563eb; /* Tailwind blue-600 */
+  font-weight: bold;
+}
+
+.title {
+  color: #2563eb;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+
+.gain-card {
+  background: linear-gradient(to bottom right, #ecfdf5, #d1fae5); 
+  border-radius: 12px;
+  padding: 16px;
+  width: 260px;
+  font-family: sans-serif;
+  border: 1px solid #86efac;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.icon {
+  font-size: 28px;
+  color: #10b981; /* Tailwind green-500 */
+}
+
+.title {
+  font-size: 14px;
+  color: #047857; /* Tailwind green-700 */
+  font-weight: 500;
+}
+
+.amount {
+  font-size: 26px;
+  font-weight: bold;
+  color: #111827; /* Tailwind gray-900 */
+}
+
+.percent {
+  font-size: 14px;
+  color: #10b981;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.treding_up_green {
+  color: #16a34a; /* Tailwind green-500 */
+}
+
+.trending_red{
+    color: #dc2626
+}
+
+.position-card {
+    cursor: pointer;
+    background: linear-gradient(to bottom right, #cde2fd, #efe4fa);
+    border-radius: 12px;
+    padding: 16px;
+    width: 260px;
+    font-family: sans-serif;
+    border: 1px solid #bfdbfe;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.position_title {
+  font-size: 14px;
+  color: #9333ea; /* Tailwind green-700 */
+  font-weight: 500;
+}
+
+.holding_text{
+    color: #9333ea; /* Tailwind green-700 */
+}
+
+
+.dashboard {
+  margin-top: 5%;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.section {
+    background-color: #fff;
+    padding: 20px;
+    border-color: #e7dbdb;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+}
+
+.gainers {
+  width: 35%; /* customize width here */
+}
+
+.losers {
+  width: 35%; /* customize width here */
+}
+
+.actions {
+  width: 400px; /* customize width here */
+}
+
+.section h2 {
+  margin-top: 0;
+}
+
+.stock {
+    background-color: #fff;
+    padding: 10px;
+    border-color: #e7dbdb;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thin;
+}
+
+.info strong {
+  font-size: 1.1em;
+  display: block;
+}
+
+.info span {
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+.price {
+  margin-top: 5px;
+}
+
+.price strong {
+  display: block;
+  font-size: 1.1em;
+}
+
+.gain {
+  color: #00ff88;
+}
+
+.loss {
+  color: #ff4444;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.buy {
+  background-color: #28a745;
+  color: white;
+}
+
+.sell {
+  background-color: #dc3545;
+  color: white;
+}
+
+.ai {
+  background-color: #f4f4f4;
+  color: #1a1aff;
+}
+
+
+.gainers-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.negative{
+  color:#f5b9b9;
+  /* background: #f5b9b9; */
+}
+.negative_bg{
+  background: #f5b9b9; 
+}
+.postive{
+  color: #047857;
+}
