@@ -1,4 +1,3 @@
-import React from "react";
 import GlobalConstant from "../Constants/constant";
 
 export default function ChatMessage({ message }) {
@@ -39,6 +38,13 @@ export default function ChatMessage({ message }) {
     if(orders.length == 0){
       return(
         <div> No orders to show</div>
+      );
+    }
+    if(orders[0].success === false){
+      const message = (orders[0].message).toLowerCase()
+      if(message.includes("authorised") || message.includes("edis") )
+       return(
+        <div> Please setup you TPIN from your app, or try to sell one order from your broker</div>
       );
     }
    return (

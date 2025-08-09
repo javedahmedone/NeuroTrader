@@ -9,12 +9,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function Holdings () {
-      const [userHoldingsData, setUserHoldingsData] = useState([]);
-      const [overAllHoldingsDetails, setOverAllHoldingsDetails] = useState(null);
-      const [error, setError] = useState(null);
-    const hasFetched = useRef(false);
-      
-      const navigate = useNavigate()
+    const [userHoldingsData, setUserHoldingsData] = useState([]);
+    const [overAllHoldingsDetails, setOverAllHoldingsDetails] = useState(null);
+    const [error, setError] = useState(null);
+    const hasFetched = useRef(false);  
+    const navigate = useNavigate()
 
 
   useEffect(() => {

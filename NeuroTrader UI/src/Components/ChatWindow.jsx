@@ -1,11 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import  { useState, useRef, useEffect } from 'react';
 import '../Styles/ChatWindow.css';
 import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
 import ChatMessage from "./ChatMessage";
 import GlobalConstant from '../Constants/constant';
 import {  Send} from "lucide-react";
+import { useNavigate } from 'react-router-dom';
+import LoggedOutUser from "./Logout";
 
-const ChatWindow = ({ open, onClose }) => {
+
+  const ChatWindow = ({ open, onClose }) => {
+      const navigate = useNavigate()
+
   const [messages, setMessages] = useState([
     {
       sender: 'bot',
@@ -19,30 +24,6 @@ const ChatWindow = ({ open, onClose }) => {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
-//   const simulateTypingEffect = (fullText) => {
-//     let index = 0;
-//     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-//     const intervalId = setInterval(() => {
-//       index++;
-//       const partialText = fullText.slice(0, index);
-
-//       setMessages(prev => {
-//         const updated = [...prev];
-//         if (index === 1) {
-//           updated.push({ sender: 'bot', text: partialText, time });
-//         } else {
-//           updated[updated.length - 1].text = partialText;
-//         }
-//         return updated;
-//       });
-
-//       if (index >= fullText.length) {
-//         clearInterval(intervalId);
-//       }
-//     }, 25); // adjust speed here
-//   };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -60,7 +41,9 @@ const ChatWindow = ({ open, onClose }) => {
     try {
       const response = await AngelOneApiCollection.fetchUserPromtData(input);
       console.log("AI Response:", response);
-
+      if(response != null && response.data != null && response.data.success == "Invalid Token"){
+        LoggedOutUser(navigate);
+      }
       const botTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       if (response.userIntent === GlobalConstant.HOLDINGS) {
