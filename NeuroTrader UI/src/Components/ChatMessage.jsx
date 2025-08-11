@@ -7,7 +7,7 @@ export default function ChatMessage({ message }) {
    return (
   <div>
     <div className="font_18"><strong>📊 Holding Summary</strong></div>
-    {holdings.map((holding, index) => (
+    {holdings.filter(holding => holding.quantity !== 0).map((holding, index) => ( 
       <div key={index} style={{ marginBottom: '12px' }}>
         <div className="font_18"><b>#{index + 1}</b></div>
         <div className="font_18"><b>Stock:</b> {holding.symbol}</div>

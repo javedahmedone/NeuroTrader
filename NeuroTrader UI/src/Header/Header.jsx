@@ -1,12 +1,8 @@
 import {  useState } from "react";
 import { useNavigate } from 'react-router-dom';
-
 import './Header.css';
 import { Brain, Power } from 'lucide-react';
 import ChatWindow from "../Components/ChatWindow";
-
-// import logoIcon from '../assets/brain-icon.png'; // Replace with your actual icon path
-// import userAvatar from '../assets/user-avatar.png'; // Replace with actual user image
 
 const Header = () => {
   const userName  = sessionStorage.getItem("user");

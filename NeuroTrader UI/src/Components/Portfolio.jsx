@@ -1,21 +1,22 @@
 import { useEffect, useState, useRef } from "react";
 import {  TrendingUp, PieChart,  Target,  TrendingDown,Aperture, IndianRupee} from "lucide-react";
-import "../Styles/Portfolio.css";
 import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
 import HoldingsResponse from "../Model/HoldingsResponse";
 import TotalHolding from "../Model/TotalHolding";
 import GlobalConstant from "../Constants/constant";
 import LoggedOutUser from "./Logout";
 import { useNavigate } from 'react-router-dom';
+import Spinner from "../Components/Spinner"; // ✅ Import the loader
+import "../Styles/Portfolio.css";
 
 export default function Portfolio() {
   const [uesrHoldingsData, setUserHoldingsData] = useState([]);
   const [overAllHoldingsDetails, setOverAllHoldingsDetails] = useState(null);
   const [error, setError] = useState(null);
   const hasFetched = useRef(false);
-  const [chatOpen, setChatOpen] = useState(false);
   const navigate = useNavigate();
   const [isNegative, setIsNegative] = useState(false);
+  const [loading, setLoading] = useState(true); // ✅ Loader state
 
   useEffect(() => {
     if (hasFetched.current) return;
@@ -38,6 +39,8 @@ export default function Portfolio() {
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
         setError("Failed to load portfolio data.");
+      } finally {
+        setLoading(false); // ✅ Hide loader after fetch
       }
     };
 
@@ -48,8 +51,11 @@ export default function Portfolio() {
     return <div className="portfolio-container"><p>{error}</p></div>;
   }
 
-  if (!overAllHoldingsDetails) {
-    return <div className="portfolio-container"><p>Loading portfolio...</p></div>;
+  // if (!overAllHoldingsDetails) {
+  //   return <div className="portfolio-container"><p>Loading portfolio...</p></div>;
+  // }
+    if (loading) {
+    return <Spinner />;
   }
 
   return (

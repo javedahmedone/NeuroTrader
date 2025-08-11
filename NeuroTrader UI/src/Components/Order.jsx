@@ -1,18 +1,17 @@
-import "../Styles/Order.css";
 import { useEffect, useState, useRef } from "react";
 import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
 import GlobalConstant from "../Constants/constant";
 import LoggedOutUser from "./Logout";
 import { useNavigate } from 'react-router-dom';
-
+import Spinner from "../Components/Spinner"; // ✅ Import the loader
+import "../Styles/Order.css";
 
 export default function Order () {
-  debugger
     const [userOrders, setUserOrders] = useState([]);
     const [error, setError] = useState(null);
     const hasFetched = useRef(false);  
     const navigate = useNavigate()
-    const userHoldingsData= []
+    const [loading, setLoading] = useState(true); // ✅ Loader state
 
   useEffect(() => {
     if (hasFetched.current) return;
@@ -31,13 +30,17 @@ export default function Order () {
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
         setError("Failed to load portfolio data.");
+      }finally {
+        setLoading(false); // ✅ Hide loader after fetch
       }
     };
 
     fetchAllData();
   }, []);
 
-
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="orders-container">
       <h2>Orders <span className="badge">{userOrders.length}</span></h2>
