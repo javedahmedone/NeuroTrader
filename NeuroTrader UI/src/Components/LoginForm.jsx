@@ -36,7 +36,6 @@ export default function LoginForm() {
         console.log("🔐 Sending login payload:", payload);
         const result = await AngelOneApiCollection.loginUser(payload);
         console.log("✅ Login success:", result);
-        alert("Login successful!");
         navigate("/portfolio");
       } catch (error) {
         console.error("❌ Login failed:", error);

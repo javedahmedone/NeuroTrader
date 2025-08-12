@@ -1,0 +1,75 @@
+.lp-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.lp-modal {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 1.6rem;
+  text-align: center;
+  transform: translateY(0);
+}
+
+.lp-title {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827; /* dark */
+}
+
+.lp-text {
+  margin: 0 0 1rem 0;
+  color: #6b7280; /* gray */
+  font-size: 0.95rem;
+}
+
+.lp-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.lp-btn {
+  min-width: 100px;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+.lp-btn:active { transform: translateY(1px); }
+
+.lp-btn-yes {
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%); /* red */
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(220,38,38,0.18);
+}
+
+.lp-btn-yes:hover { opacity: 0.95; }
+
+.lp-btn-no {
+  background: #f3f4f6; /* light gray */
+  color: #111827;
+}
+
+.lp-btn-no:hover { background: #e5e7eb; }
+
+/* Responsive tweaks */
+@media (max-width: 420px) {
+  .lp-modal { padding: 1rem; }
+  .lp-btn { min-width: 86px; }
+}

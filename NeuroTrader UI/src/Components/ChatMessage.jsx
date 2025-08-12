@@ -41,10 +41,16 @@ export default function ChatMessage({ message }) {
       );
     }
     if(orders[0].success === false){
-      const message = (orders[0].message).toLowerCase()
-      if(message.includes("authorised") || message.includes("edis") )
+      debugger
+      const message = orders[0].message
+      const errorMessage =  orders[0].error
+      if(message.toLowerCase().includes("authorised") || message.toLowerCase.includes("edis") )
        return(
         <div> Please setup you TPIN from your app, or try to sell one order from your broker</div>
+      );
+      if(errorMessage === "CODE01" )
+       return(
+        <div>{message}</div>
       );
     }
    return (

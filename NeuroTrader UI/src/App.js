@@ -5,9 +5,7 @@ import Portfolio from "./Components/Portfolio";
 import StockList from "./Components/UserStock";
 import Holdings from "./Components/Holdings";
 import Spinner from "./Components/Spinner";
-
-import GeminiPromptTester from "./Components/GeminiPromptTester";
-import Layout from "./Layout"; // <- import layout with header
+import Layout from "./Layout"; 
 import Order from "./Components/Order";
 
 export default function App() {
@@ -17,8 +15,6 @@ export default function App() {
         {/* Routes WITHOUT header */}
         <Route path="/" element={<LoginForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/test" element={<GeminiPromptTester />} />
-
         
         {/* Routes WITH header */}
         <Route element={<Layout />}>
@@ -27,8 +23,6 @@ export default function App() {
           <Route path="/holdings" element={<Holdings />} />
           <Route path="/order" element={<Order />} />
           <Route path="/spinner" element={<Spinner />} />
-
-
         </Route>
       </Routes>
     </Router>

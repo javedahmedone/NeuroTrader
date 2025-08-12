@@ -23,7 +23,7 @@ const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => 
     if (!response.ok) {
       throw new Error("Login failed");
     }
-
+debugger
     const result = await response.json();
     LoginModel.jwtToken = result?.jwt || null;
     LoginModel.userName = result?.userName || null;
@@ -32,7 +32,7 @@ const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => 
     LoginModel.brokerName =  result?.brokerName || null;
     // Store tokens in session
     sessionStorage.setItem("jwt", LoginModel.jwtToken);
-    sessionStorage.setItem("user", JSON.stringify(LoginModel.userName));
+    sessionStorage.setItem("user", LoginModel.userName);
     sessionStorage.setItem("clientcode", clientcode);
     sessionStorage.setItem("apikey", apiKey);
     sessionStorage.setItem("refreshToken", LoginModel.refreshToken);

@@ -6,7 +6,7 @@ import TotalHolding from "../Model/TotalHolding";
 import GlobalConstant from "../Constants/constant";
 import LoggedOutUser from "./Logout";
 import { useNavigate } from 'react-router-dom';
-import Spinner from "../Components/Spinner"; // ✅ Import the loader
+import Spinner from "../Components/Spinner"; 
 import "../Styles/Portfolio.css";
 
 export default function Portfolio() {
