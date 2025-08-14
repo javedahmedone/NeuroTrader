@@ -14,7 +14,7 @@
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 30%;
 }
 
 /* Title */
@@ -48,4 +48,36 @@
 
 .login-button:hover {
   background-color: #0056b3;
+}
+
+.center{
+  align-items: center;
+} 
+
+.dark_blue{
+  color: #202c46;
+}
+
+.app_logo{
+    background-color: #202c46;
+    color: white;
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.ml_35_p{
+  margin-left: 35%;
+}
+
+.ml_30_p{
+  margin-left: 30%;
+}
+
+.mt_20{
+  margin-top: 20px;
 }
