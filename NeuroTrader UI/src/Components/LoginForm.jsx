@@ -32,7 +32,6 @@ export default function LoginForm() {
       };
 
       try {
-        debugger
         console.log("🔐 Sending login payload:", payload);
         const result = await AngelOneApiCollection.loginUser(payload);
         console.log("✅ Login success:", result);

@@ -54,3 +54,32 @@
   border-radius: 4px;
   font-size: 14px;
 }
+
+
+
+.btn{
+    margin-left: 50%;
+    width: 20%;
+    /* background: green; */
+    color: white;
+    margin-top: 2%;
+}
+.buy-qty-input {
+  width: 190px;
+  height: 35px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.w_15_p{
+  width: 15%;
+}
+
+
+.green{
+  background: green
+}
+
+.red{
+  background: red;
+}

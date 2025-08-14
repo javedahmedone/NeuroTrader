@@ -44,7 +44,7 @@ export default function ChatMessage({ message }) {
       debugger
       const message = orders[0].message
       const errorMessage =  orders[0].error
-      if(message.toLowerCase().includes("authorised") || message.toLowerCase.includes("edis") )
+      if(message.toLowerCase().includes("authorised") || message.toLowerCase().includes("edis") )
        return(
         <div> Please setup you TPIN from your app, or try to sell one order from your broker</div>
       );

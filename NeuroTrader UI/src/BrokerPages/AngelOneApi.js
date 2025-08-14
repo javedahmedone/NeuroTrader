@@ -50,63 +50,14 @@ const AngelOneApiCollection = {
   fetchUserProfile: () => fetchWithAuth("/portfolio/profile", { method: "GET" }),
   fetchUserHoldings: () => fetchWithAuth("/portfolio/holdings", { method: "GET" }),
   fetchUserOrders: () => fetchWithAuth("/portfolio/orders", { method: "GET" }),
-
   fetchUserPromtData: (prompt) =>{
     const encodedPrompt = encodeURIComponent(prompt);
     return fetchWithAuth(`/promtAnalyzer/processPrompt?prompt=${encodedPrompt}`, { method: "GET" });
   }, 
+    placeOrder: (orderParams) =>
+    fetchWithAuth("/portfolio/placeOrder", {
+      method: "POST",
+      body: orderParams
+    })
 };
  export default AngelOneApiCollection;
-
-// PROFILE FETCH FUNCTION
-// const fetchUserProfile = async () => {
-//   try {
-//     const response = await fetch(`${BASE_URL}/portfolio/profile`, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//         "apiKey": sessionStorage.getItem("apikey"),
-//         "Clientcode": sessionStorage.getItem("clientcode"),
-//         "Authorization": sessionStorage.getItem("jwt"),
-//         "refresh": sessionStorage.getItem("refreshToken"),
-//       },
-//     });
-
-//     if (!response.ok) {
-//       throw new Error("Failed to fetch profile");
-//     }
-
-//     const result = await response.json();
-//     return result;
-//   } catch (error) {
-//     console.error("Profile fetch error:", error.message);
-//     throw error;
-//   }
-// };
-
-// // ✅ EXPORT AS A COLLECTION
-// const AngelOneApiCollection = {
-//   loginUser,
-//   fetchUserProfile,
-// };
-
-// export default AngelOneApiCollection;
-
-
-
-// // BrokerPages/AngelOneApi.js
-// import fetchWithAuth from "../services/fetchWithAuth.js";
-
-// const AngelOneApiCollection = {
-//   fetchUserProfile: () => fetchWithAuth("/portfolio/profile", { method: "GET" }),
-
-//   fetchOrders: () => fetchWithAuth("/orders", { method: "GET" }),
-
-//   placeOrder: (orderPayload) =>
-//     fetchWithAuth("/orders/place", {
-//       method: "POST",
-//       body: JSON.stringify(orderPayload),
-//     }),
-// };
-
-// export default AngelOneApiCollection;

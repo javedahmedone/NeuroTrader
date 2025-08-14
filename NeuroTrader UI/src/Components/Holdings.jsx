@@ -10,15 +10,11 @@ import "../Styles/Holdings.css";
 export default function Holdings() {
   const [userHoldingsData, setUserHoldingsData] = useState([]);
   const [error, setError] = useState(null);
+  const [quantities, setQuantities] = useState({})
   const [loading, setLoading] = useState(true); // ✅ Loader state
   const hasFetched = useRef(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
-
-    const fetchAllData = async () => {
+   const fetchAllData = async () => {
       try {
         const response = await AngelOneApiCollection.fetchUserHoldings();
         if (response.message === GlobalConstant.InvalidToken) {
@@ -35,8 +31,42 @@ export default function Holdings() {
       }
     };
 
+  useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
     fetchAllData();
   }, []);
+
+
+const handleOrder = async (symbol, token, index, transactionType) => {
+  debugger
+  setLoading(true); // ✅ Hide loader after fetch
+  
+  const qty = parseInt(quantities[index] || 0, 10);
+  const data = {
+    symbol,
+    name: "",
+    instrumenttype: "",
+    token,
+    quantity: qty,
+    transactionType: transactionType
+  };
+  try {
+    const response = await AngelOneApiCollection.placeOrder(data); // ✅ waits here
+    if (response && response.success === false) {
+      alert(response.message);
+    } else {
+      console.log("Order placed successfully:", response);
+      // fetchAllData();
+    }
+  } catch (err) {
+    console.error("Order placement failed:", err);
+  }
+  finally {
+        setLoading(false); // ✅ Hide loader after fetch
+  }
+};
+
 
   // ✅ Show loader until data is fetched
   if (loading) {
@@ -58,6 +88,9 @@ export default function Holdings() {
               <th>Avg. Price</th>
               <th>Current Val.</th>
               <th>Overall G/L</th>
+              <th> Buy </th>
+              <th> Sell </th>
+
             </tr>
           </thead>
           <tbody>
@@ -74,6 +107,39 @@ export default function Holdings() {
                       <br />
                       <span>{h.pnlpercentage.toFixed(2)}%</span>
                     </td>
+                    <td className="w_15_p">
+                      <input className="buy-qty-input "
+                        type="number"
+                        value={quantities[i] || ""}
+                        onChange={(e) => 
+                          setQuantities({
+                            ...quantities,
+                            [i]:e.target.value
+                          })}
+                        placeholder="enter quantity to buy"
+                      />
+                      <button className="btn green" title="Click To Buy"
+                        onClick={() => handleOrder(h.tradingsymbol, h.symboltoken, i, GlobalConstant.BUY)}>
+                          Buy
+                      </button>
+                    </td>
+                    <td className="w_15_p">
+                      <input className="buy-qty-input"
+                        type="number"
+                        placeholder="enter quantity to sell"
+                        value={quantities[i] || ""}
+                          onChange={(e) => 
+                            setQuantities({
+                              ...quantities,
+                              [i]:e.target.value
+                          })}
+                      />
+                      <button className="btn red" title="Click Here to Sell"
+                        onClick={() => handleOrder(h.tradingsymbol, h.symboltoken, i, GlobalConstant.SELL)}>
+                          Sell
+                      </button>
+                    </td>
+                    
                   </tr>
                 )
             )}

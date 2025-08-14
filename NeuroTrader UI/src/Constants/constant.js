@@ -9,7 +9,9 @@ const GlobalConstant = {
     HOLDINGS : "holdings",
     SELLORDER : "sellOrder",
     BUYORDER : "buyOrder",
-    UNKNOWN: "unknown"
+    UNKNOWN: "unknown",
+    BUY :"BUY",
+    SELL : "SELL"
   // Add more constants as needed
 };
 

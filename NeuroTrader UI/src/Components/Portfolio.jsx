@@ -106,46 +106,39 @@ export default function Portfolio() {
       {/* Dashboard Sections (static for now) */}
       <div className="dashboard">
         {/* Gainers */}
-        <div className="section gainers">
-          <div className="gainers-header">
-            <TrendingUp className="h-8 w-8 treding_up_green" />
-            <h3>Top Gainers</h3>
-            <span className="auto mr_10">Today</span>
-          </div>
-          <div className="stock">
-            <div className="info">
-              <strong>NVDA</strong><span>NVIDIA Corporation</span>
-            </div>
-            <div className="price">
-              <strong>$875.43</strong>
-              <span className="gain">+45.23 (5.45%)</span>
-            </div>
-          </div>
-        </div>
 
         {/* Losers */}
         <div className="section losers">
           <div className="gainers-header">
-            <TrendingDown className="h-8 w-8 trending_red" />
-            <h3>Top Losers</h3>
-            <span className="auto mr_10">Top HOldings</span>
+            <h3 >Top Holdings</h3>
           </div>
-          <div className="stock">
-            <div className="info">
-              <strong>META</strong><span>Meta Platforms Inc.</span>
-            </div>
-            <div className="price">
-              <strong>$324.56</strong>
-              <span className="loss">-15.43 (-4.54%)</span>
-            </div>
+          <div className="stocks-list">
+            {uesrHoldingsData.map((holding, index) => (
+              
+              <div className="stock" key={index}>
+                <div className="info">
+                  <strong>{holding.tradingsymbol}</strong>
+                  <span>{holding.tradingsymbol}</span>
+                </div>
+                <div className="price">
+                  <strong>${holding.averageprice}</strong>
+                  <span
+          className={((holding.ltp - holding.averageprice) / holding.averageprice) * 100 < 0 ? "loss" : "gain"}
+                  >
+          {(((holding.ltp - holding.averageprice) / holding.averageprice) * 100).toFixed(2)}%
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
+
         </div>
 
         {/* Actions */}
         <div className="section actions">
           <h2>Quick Actions</h2>
-          <button className="buy">🛒 Buy Stocks</button>
-          <button className="sell">💲 Sell Stocks</button>
+          <button className="buy" onClick={() => navigate("/holdings")}>🛒 Buy Stocks</button>
+          <button className="sell" onClick={() => navigate("/holdings")}>💲 Sell Stocks</button>
           {/* <button className="ai">🤖 AI Trading Assistant</button> */}
           {/* <button className="ai" onClick={() => setChatOpen(true)}>
             🤖 AI Trading Assistant
