@@ -46,7 +46,10 @@
 }
 
 .pointer{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
+.mandatory {
+  color: red;
+}
 

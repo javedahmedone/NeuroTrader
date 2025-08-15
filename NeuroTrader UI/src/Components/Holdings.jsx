@@ -10,10 +10,28 @@ import "../Styles/Holdings.css";
 export default function Holdings() {
   const [userHoldingsData, setUserHoldingsData] = useState([]);
   const [error, setError] = useState(null);
-  const [quantities, setQuantities] = useState({})
+  const [buyQuantities, setBuyQuantities] = useState({})
+  const [sellQuantities, setSellQuantities] = useState({})
+
   const [loading, setLoading] = useState(true); // ✅ Loader state
   const hasFetched = useRef(false);
+   const loaderOverlayStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(255,255,255,0.9)",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    opacity : "80%"
+  };
   const navigate = useNavigate();
+
+
    const fetchAllData = async () => {
       try {
         const response = await AngelOneApiCollection.fetchUserHoldings();
@@ -44,7 +62,13 @@ export default function Holdings() {
 const handleOrder = async (symbol, token, index, transactionType) => {
   debugger
   setLoading(true); // ✅ Hide loader after fetch
-  
+  let quantities = [];
+  if(transactionType === GlobalConstant.BUY){
+    quantities = buyQuantities;
+  }
+  if(transactionType === GlobalConstant.SELL){
+    quantities = sellQuantities;
+  }
   const qty = parseInt(quantities[index] || 0, 10);
   const data = {
     symbol,
@@ -60,13 +84,13 @@ const handleOrder = async (symbol, token, index, transactionType) => {
       alert(response.message);
     } else {
       console.log("Order placed successfully:", response);
-      // fetchAllData();
+      fetchAllData();
     }
   } catch (err) {
     console.error("Order placement failed:", err);
   }
   finally {
-        setLoading(false); // ✅ Hide loader after fetch
+      setLoading(false); // ✅ Hide loader after fetch
   }
 };
 
@@ -113,10 +137,10 @@ const handleOrder = async (symbol, token, index, transactionType) => {
                     <td className="w_15_p">
                       <input className="buy-qty-input "
                         type="number"
-                        value={quantities[i] || ""}
+                        value={buyQuantities[i] || ""}
                         onChange={(e) => 
-                          setQuantities({
-                            ...quantities,
+                          setBuyQuantities({
+                            ...buyQuantities,
                             [i]:e.target.value
                           })}
                         placeholder="enter quantity to buy"
@@ -130,10 +154,10 @@ const handleOrder = async (symbol, token, index, transactionType) => {
                       <input className="buy-qty-input"
                         type="number"
                         placeholder="enter quantity to sell"
-                        value={quantities[i] || ""}
+                        value={sellQuantities[i] || ""}
                           onChange={(e) => 
-                            setQuantities({
-                              ...quantities,
+                            setSellQuantities({
+                              ...sellQuantities,
                               [i]:e.target.value
                           })}
                       />
@@ -149,6 +173,12 @@ const handleOrder = async (symbol, token, index, transactionType) => {
           </tbody>
         </table>
       </div>
+       {loading && (
+          <div style={loaderOverlayStyle}>
+            <Spinner />
+          </div>
+        )}
     </div>
+
   );
 }

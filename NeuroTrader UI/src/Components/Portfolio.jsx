@@ -8,6 +8,7 @@ import LoggedOutUser from "./Logout";
 import { useNavigate } from 'react-router-dom';
 import Spinner from "../Components/Spinner"; 
 import "../Styles/Portfolio.css";
+import "../App.css"; 
 
 export default function Portfolio() {
   const [uesrHoldingsData, setUserHoldingsData] = useState([]);

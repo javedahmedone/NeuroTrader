@@ -4,7 +4,9 @@ import AngelOne from "../BrokerPages/AngelOne";
 import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
 import tradingBackground from "../Assets/trading-background.jpg";
 import { TrendingUp } from "lucide-react";
+import Spinner from "../Components/Spinner"; // ✅ Loader component
 import "../Styles/LoginForm.css";
+import "../App.css"; 
 
 export default function LoginForm() {
   const [role, setRole] = useState("");
@@ -12,15 +14,31 @@ export default function LoginForm() {
   const [angelOneData, setAngelOneData] = useState({});
   const [showErrors, setShowErrors] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // ✅ Loader state
+  const loaderOverlayStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(255,255,255,0.9)",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    opacity : "80%"
+  };
 
   const roles = [{ label: "Angel One", value: "angelone" }];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowErrors(true); // force red borders
-
     if (!isFormValid) return;
-
+    if(isFormValid){
+      setLoading(true); // ✅ Show loader
+    }
     if (role === "angelone") {
       const { clientcode, password, totp, apiKey } = angelOneData;
       try {
@@ -83,6 +101,11 @@ export default function LoginForm() {
             <button className="login-button mt_20 pointer" type="submit">
               Login
             </button>
+          )}
+          {loading && (
+                    <div style={loaderOverlayStyle}>
+                      <Spinner />
+                    </div>
           )}
         </form>
       </div>

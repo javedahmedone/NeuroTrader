@@ -100,7 +100,7 @@ const ChatWindow = ({ open, onClose }) => {
               <div className="subtitle">Always here to help</div>
             </div>
           </div>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <button className="close-btn" title="Close" onClick={onClose}>×</button>
         </div>
 
         <div className="chat-body">

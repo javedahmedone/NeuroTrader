@@ -24,7 +24,7 @@ const AngelOne = ({ onFormChange, onFormDataChange, showErrors }) => {
       <h3 className="angelone-title">Angel One Credentials</h3>
 
       <div className="angelone-field">
-        <label>Client Code <span>*</span></label>
+        <label>Client Code <span className="mandatory">*</span></label>
         <input
           type="text"
           value={clientcode}
@@ -36,7 +36,7 @@ const AngelOne = ({ onFormChange, onFormDataChange, showErrors }) => {
       </div>
 
       <div className="angelone-field">
-        <label>PIN <span>*</span></label>
+        <label>PIN <span className="mandatory">*</span></label>
         <input
           type="password"
           name="angel-password"
@@ -49,7 +49,7 @@ const AngelOne = ({ onFormChange, onFormDataChange, showErrors }) => {
 
       <div className="angelone-field">
         <label>
-          TOTP <span>*</span>
+          TOTP <span className="mandatory">*</span>
         </label>
         <input
           type="text"
@@ -62,7 +62,7 @@ const AngelOne = ({ onFormChange, onFormDataChange, showErrors }) => {
       </div>
 
       <div className="angelone-field">
-        <label>API Key <span>*</span></label>
+        <label>API Key <span className="mandatory">*</span></label>
         <input
           type="text"
           value={apiKey}
