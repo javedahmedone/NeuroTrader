@@ -24,6 +24,7 @@ export default function Portfolio() {
 
     const fetchAllData = async () => {
       try {
+        debugger;
         const response = await AngelOneApiCollection.fetchUserHoldings();
         if(response.message === GlobalConstant.InvalidToken){
           LoggedOutUser(navigate);
@@ -38,6 +39,9 @@ export default function Portfolio() {
         console.log("✅ All data fetched",data);
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
+        if(err.message.includes('401')){
+          LoggedOutUser(navigate);
+        }
         setError("Failed to load portfolio data.");
       } finally {
         setLoading(false); // ✅ Hide loader after fetch

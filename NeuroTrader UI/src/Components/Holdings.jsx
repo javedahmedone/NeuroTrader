@@ -25,6 +25,9 @@ export default function Holdings() {
         console.log("✅ All data fetched", data);
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
+        if(err.message.includes('401')){
+          LoggedOutUser(navigate);
+        }
         setError("Failed to load portfolio data.");
       } finally {
         setLoading(false); // ✅ Hide loader after fetch
