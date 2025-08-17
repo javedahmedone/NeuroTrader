@@ -98,9 +98,9 @@ const handleOrder = async (symbol, token, index, transactionType) => {
 
 
   // ✅ Show loader until data is fetched
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   return (
     <div className="holdings-container">

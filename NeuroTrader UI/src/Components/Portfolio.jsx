@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import {  TrendingUp, PieChart,  Target,  TrendingDown,Aperture, IndianRupee} from "lucide-react";
+import {  PieChart,  Target,Aperture, IndianRupee} from "lucide-react";
 import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
 import HoldingsResponse from "../Model/HoldingsResponse";
 import TotalHolding from "../Model/TotalHolding";
@@ -125,11 +125,10 @@ export default function Portfolio() {
                   <span>{holding.tradingsymbol}</span>
                 </div>
                 <div className="price">
-                  <strong>${holding.averageprice}</strong>
+                  <strong>₹{holding.averageprice}</strong>
                   <span
-          className={((holding.ltp - holding.averageprice) / holding.averageprice) * 100 < 0 ? "loss" : "gain"}
-                  >
-          {(((holding.ltp - holding.averageprice) / holding.averageprice) * 100).toFixed(2)}%
+                  className={((holding.ltp - holding.averageprice) / holding.averageprice) * 100 < 0 ? "loss" : "gain"} >
+                  {(((holding.ltp - holding.averageprice) / holding.averageprice) * 100).toFixed(2)}%
                   </span>
                 </div>
               </div>
@@ -142,12 +141,7 @@ export default function Portfolio() {
         <div className="section actions">
           <h2>Quick Actions</h2>
           <button className="buy" onClick={() => navigate("/holdings")}>🛒 Buy Stocks</button>
-          <button className="sell" onClick={() => navigate("/holdings")}>💲 Sell Stocks</button>
-          {/* <button className="ai">🤖 AI Trading Assistant</button> */}
-          {/* <button className="ai" onClick={() => setChatOpen(true)}>
-            🤖 AI Trading Assistant
-          </button>
-          <ChatWindow open={chatOpen} onClose={() => setChatOpen(false)} /> */}
+          <button className="sell" onClick={() => navigate("/holdings")}>₹ Sell Stocks</button>
 
         </div>
       </div>
