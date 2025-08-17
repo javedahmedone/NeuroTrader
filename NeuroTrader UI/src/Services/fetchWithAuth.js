@@ -25,13 +25,11 @@ const fetchWithAuth = async (endpoint, options = {}) => {
   };
 
   try {
-    debugger
     const response = await fetch(`${BASE_URL}${endpoint}`, config);
 
     if (!response.ok) {
       if (response.status === 401) {
         console.warn("🔐 Token expired or unauthorized.");
-        // Optional: handle refresh token here
       }
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

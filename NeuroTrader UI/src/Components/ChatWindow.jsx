@@ -72,7 +72,10 @@ const ChatWindow = ({ open, onClose }) => {
         case GlobalConstant.BUYORDER:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.BUYORDER, data: response.data };
           break;
-        case GlobalConstant.GETORDERS:
+        case GlobalConstant.GETORDERS || GlobalConstant.CANCELALLORDERS:
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response.data };
+          break;
+        case  GlobalConstant.CANCELALLORDERS:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response.data };
           break;
         case GlobalConstant.CANCELORDER:

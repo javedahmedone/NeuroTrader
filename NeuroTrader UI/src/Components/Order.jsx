@@ -44,9 +44,9 @@ export default function Order () {
         console.error("❌ Error fetching portfolio data:", error);
         setError("Failed to load portfolio data.");
       }
-      // finally {
-      //   setLoading(false); // ✅ Hide loader after fetch
-      // }
+      finally {
+        setLoading(false); // ✅ Hide loader after fetch
+      }
     };
 
     const cancelOrder = async (orderId) => {
@@ -65,8 +65,6 @@ export default function Order () {
       } catch (error) {
         console.error("❌ Error cancelling order:", error);
         alert("Error cancelling order. Please try again.");
-      } finally {
-        setLoading(false); // ✅ Hide loader
       }
     };
 
