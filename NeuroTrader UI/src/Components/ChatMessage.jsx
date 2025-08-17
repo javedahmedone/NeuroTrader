@@ -32,7 +32,7 @@ export default function ChatMessage({ message }) {
     );
   }
 
-  if (message.type === GlobalConstant.BUYORDER || message.type == GlobalConstant.GETORDERS || message.type == GlobalConstant.SELLORDER) {
+  if (message.type === GlobalConstant.BUYORDER || message.type == GlobalConstant.GETORDERS || message.type == GlobalConstant.SELLORDER || message.type === GlobalConstant.CANCELORDER) {
     
     const orders = Array.isArray(message.data) ? message.data : [message.data];
     if(orders.length == 0){
@@ -40,8 +40,13 @@ export default function ChatMessage({ message }) {
         <div> No orders to show</div>
       );
     }
+    if(orders[0].status === false){
+      const message = orders[0].message
+      return(
+        <div>{message}</div>
+      );
+    }
     if(orders[0].success === false){
-      debugger
       const message = orders[0].message
       const errorMessage =  orders[0].error
       if(message.toLowerCase().includes("authorised") || message.toLowerCase().includes("edis") )

@@ -60,7 +60,6 @@ export default function Holdings() {
 
 
 const handleOrder = async (symbol, token, index, transactionType) => {
-  debugger
   setLoading(true); // ✅ Hide loader after fetch
   let quantities = [];
   if(transactionType === GlobalConstant.BUY){
@@ -87,6 +86,9 @@ const handleOrder = async (symbol, token, index, transactionType) => {
       fetchAllData();
     }
   } catch (err) {
+    if(error.message.includes('401')){
+        LoggedOutUser(navigate);
+    }
     console.error("Order placement failed:", err);
   }
   finally {
@@ -106,7 +108,7 @@ const handleOrder = async (symbol, token, index, transactionType) => {
         Holdings <span className="badge">{userHoldingsData.length}</span>
       </h2>
 
-      <div className="table-wrapper">
+      <div className="tab le-wrapper">
         <table className="holdings-table">
           <thead>
             <tr>

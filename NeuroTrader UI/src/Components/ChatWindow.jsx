@@ -39,20 +39,28 @@ const ChatWindow = ({ open, onClose }) => {
     setLoading(true); // ✅ Show loader overlay
 
     try {
-      const response = await AngelOneApiCollection.fetchUserPromtData(userMessage.text);
+      let response = await AngelOneApiCollection.fetchUserPromtData(userMessage.text);
       console.log("AI Response:", response);
 
-      if (response && response.data && response.data.success === "Invalid Token") {
-        LoggedOutUser(navigate);
-        return;
-      }
+    if (
+      response === null ||    response.data === null || 
+      (response.data.success === false && response.data.message === GlobalConstant.InvalidToken)
+    ) {
+      LoggedOutUser(navigate);
+      return;
+    }
+    else if(response.userIntent === GlobalConstant.CANCELORDER){
+      const orderId =  response.data.data.orderid;
+      let userOrdersData = await AngelOneApiCollection.fetchUserOrders();
+      response.data =  userOrdersData.find((order) => order.orderid === orderId) || null;
+    }
 
-      const botTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const botTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      let newBotMessage = {
+    let newBotMessage = {
         sender: 'bot',
         time: botTime
-      };
+    };
 
       switch (response?.userIntent) {
         case GlobalConstant.HOLDINGS:
@@ -67,6 +75,9 @@ const ChatWindow = ({ open, onClose }) => {
         case GlobalConstant.GETORDERS:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response.data };
           break;
+        case GlobalConstant.CANCELORDER:
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.CANCELORDER, data: response.data };
+          break;
         case GlobalConstant.UNKNOWN:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.UNKNOWN, data: response.data };
           break;
@@ -77,6 +88,9 @@ const ChatWindow = ({ open, onClose }) => {
       setMessages((prev) => [...prev, newBotMessage]);
 
     } catch (error) {
+      if(error.message.includes('401')){
+          LoggedOutUser(navigate);
+      }
       setMessages(prev => [...prev, {
         sender: 'bot',
         text: "❌ Something went wrong. Please try again.",

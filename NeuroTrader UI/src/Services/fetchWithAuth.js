@@ -25,6 +25,7 @@ const fetchWithAuth = async (endpoint, options = {}) => {
   };
 
   try {
+    debugger
     const response = await fetch(`${BASE_URL}${endpoint}`, config);
 
     if (!response.ok) {

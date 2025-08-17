@@ -25,7 +25,6 @@ export default function Portfolio() {
 
     const fetchAllData = async () => {
       try {
-        debugger;
         const response = await AngelOneApiCollection.fetchUserHoldings();
         if(response.message === GlobalConstant.InvalidToken){
           LoggedOutUser(navigate);

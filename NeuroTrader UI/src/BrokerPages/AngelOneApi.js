@@ -23,7 +23,6 @@ const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => 
     if (!response.ok) {
       throw new Error("Login failed");
     }
-debugger
     const result = await response.json();
     LoginModel.jwtToken = result?.jwt || null;
     LoginModel.userName = result?.userName || null;
@@ -50,6 +49,14 @@ const AngelOneApiCollection = {
   fetchUserProfile: () => fetchWithAuth("/portfolio/profile", { method: "GET" }),
   fetchUserHoldings: () => fetchWithAuth("/portfolio/holdings", { method: "GET" }),
   fetchUserOrders: () => fetchWithAuth("/portfolio/orders", { method: "GET" }),
+
+  cancelUserOrders: (cancelOrderRequestModel) =>
+  fetchWithAuth("/portfolio/cancelOrder", {
+    method: "POST",
+    body: cancelOrderRequestModel, // 👈 raw object
+  }),
+
+
   fetchUserPromtData: (prompt) =>{
     const encodedPrompt = encodeURIComponent(prompt);
     return fetchWithAuth(`/promtAnalyzer/processPrompt?prompt=${encodedPrompt}`, { method: "GET" });
