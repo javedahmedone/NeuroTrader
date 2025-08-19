@@ -53,3 +53,30 @@
   color: red;
 }
 
+.mt_5p{
+  margin-top: 5%;
+}
+
+.mb_2p{
+  margin-bottom: 2%;
+}
+
+.ml_10p{
+  margin-left: 10%;
+}
+
+.mr_10p{
+  margin-right: 10%;
+}
+
+.fs_20p{
+  font-size: 20px;
+}
+
+.fs_30p{
+  font-size: 30px;
+}
+
+.mb_3px{
+  margin-bottom: 3px;
+}

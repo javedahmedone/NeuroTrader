@@ -6,6 +6,7 @@ import Holdings from "./Components/Holdings";
 import Spinner from "./Components/Spinner";
 import Layout from "./Layout"; 
 import Order from "./Components/Order";
+import AngelOneSetupGuide from "./BrokerPages/AngelOne/AngelOneSetup";
 
 export default function App() {
   return (
@@ -14,13 +15,15 @@ export default function App() {
         {/* Routes WITHOUT header */}
         <Route path="/" element={<LoginForm />} />
         <Route path="/login" element={<LoginForm />} />
-        
+        <Route path="/angelOneSetupGuide" element={<AngelOneSetupGuide />} />
+
         {/* Routes WITH header */}
         <Route element={<Layout />}>
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/holdings" element={<Holdings />} />
           <Route path="/order" element={<Order />} />
           <Route path="/spinner" element={<Spinner />} />
+
         </Route>
       </Routes>
     </Router>

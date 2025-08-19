@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AngelOne from "../BrokerPages/AngelOne";
-import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
+import AngelOne from "../BrokerPages/AngelOne/AngelOne";
+import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import tradingBackground from "../Assets/trading-background.jpg";
 import { TrendingUp } from "lucide-react";
 import Spinner from "../Components/Spinner"; // ✅ Loader component

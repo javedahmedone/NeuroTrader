@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import {  PieChart,  Target,Aperture, IndianRupee} from "lucide-react";
-import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
+import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import HoldingsResponse from "../Model/HoldingsResponse";
 import TotalHolding from "../Model/TotalHolding";
 import GlobalConstant from "../Constants/constant";

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
+import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import ChatMessage from "./ChatMessage";
 import GlobalConstant from '../Constants/constant';
 import { Send } from "lucide-react";

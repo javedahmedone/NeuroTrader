@@ -1,7 +1,7 @@
 // loginApi.js
-import BASE_URL from "../config.js";
-import LoginModel from "../Model/LoginModel.js";
-import fetchWithAuth from "../Services/fetchWithAuth.js";
+import BASE_URL from "../../config.js";
+import LoginModel from "../../Model/LoginModel.js";
+import fetchWithAuth from "../../Services/fetchWithAuth.js";
 
 // LOGIN FUNCTION
 const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => {

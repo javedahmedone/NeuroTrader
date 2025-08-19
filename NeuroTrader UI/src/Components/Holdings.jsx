@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
+import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import HoldingsResponse from "../Model/HoldingsResponse";
 import GlobalConstant from "../Constants/constant";
 import LoggedOutUser from "./Logout";

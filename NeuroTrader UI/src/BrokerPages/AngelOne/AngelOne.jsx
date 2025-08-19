@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "../Styles/AngelOne.css";
+import  { useEffect, useState } from "react";
+import "../../Styles/AngelOne.css";
 
 const AngelOne = ({ onFormChange, onFormDataChange, showErrors }) => {
   const [clientcode, setClientcode] = useState("");
@@ -73,15 +73,11 @@ const AngelOne = ({ onFormChange, onFormDataChange, showErrors }) => {
         />
       </div>
 
-      <div className="angelone-links">
-        <a
-          href="https://smartapi.angelbroking.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ➕ Don't have an account? Sign up here
-        </a>
-      </div>
+    <div className="angelone-links">
+      <a href="/angelonesetupguide" target="_blank" rel="noopener noreferrer"> 
+        ➕ Don't have an account? Click here for Setup Guide
+      </a>
+    </div>
     </div>
   );
 };

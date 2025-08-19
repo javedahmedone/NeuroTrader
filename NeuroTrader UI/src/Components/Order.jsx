@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import AngelOneApiCollection from "../BrokerPages/AngelOneApi";
+import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import GlobalConstant from "../Constants/constant";
 import LoggedOutUser from "./Logout";
 import { useNavigate } from 'react-router-dom';
