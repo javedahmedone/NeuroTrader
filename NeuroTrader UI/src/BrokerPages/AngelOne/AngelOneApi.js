@@ -2,10 +2,33 @@
 import BASE_URL from "../../config.js";
 import LoginModel from "../../Model/LoginModel.js";
 import fetchWithAuth from "../../Services/fetchWithAuth.js";
+import fetchWithoutAuth from "../../Services/fetchWithoutAuth.js";
+ 
 
 // LOGIN FUNCTION
-const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => {
+const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, brokerName }) => {
+  debugger
   try {
+      if (brokerName === "upstox") {
+        debugger
+      // 🔹 Upstox requires redirect flow
+        const result  = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        clientcode,
+        password,
+        totp,
+        apiKey,
+        apiSecret,
+        brokerName
+      }),
+    });
+    console.log(result)
+      return; // stop here because browser will redirect
+    }
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
@@ -16,6 +39,7 @@ const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => 
         password,
         totp,
         apiKey,
+        apiSecret,
         brokerName
       }),
     });
@@ -42,6 +66,9 @@ const userLogin = async ({ clientcode, password, totp, apiKey, brokerName }) => 
     console.error("Login error:", error.message);
     throw error;
   }
+  finally{
+
+  }
 };
 
 const AngelOneApiCollection = {
@@ -49,7 +76,7 @@ const AngelOneApiCollection = {
   fetchUserProfile: () => fetchWithAuth("/portfolio/profile", { method: "GET" }),
   fetchUserHoldings: () => fetchWithAuth("/portfolio/holdings", { method: "GET" }),
   fetchUserOrders: () => fetchWithAuth("/portfolio/orders", { method: "GET" }),
-
+  fetchStocks: (query) =>fetchWithoutAuth(`/stock/search?query=${encodeURIComponent(query)}`),
   cancelUserOrders: (cancelOrderRequestModel) =>
   fetchWithAuth("/portfolio/cancelOrder", {
     method: "POST",

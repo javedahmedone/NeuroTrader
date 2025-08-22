@@ -4,12 +4,14 @@ import { Brain, Power } from 'lucide-react';
 import ChatWindow from "../Components/ChatWindow";
 import LogoutPopup from "../Components/LogoutPopup";
 import LoggedOutUser from "../Components/Logout";
+import SearchStocksModal from "../Components/SearchStocksModal";
 import './Header.css';
 
 const Header = () => {
   const userName  = sessionStorage.getItem("user");
   const [chatOpen, setChatOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [searchPopupOpen, setSearchPopupOpen] = useState(false);
   const navigate = useNavigate();
 
   function handleYes(){
@@ -33,15 +35,19 @@ const Header = () => {
         </div>
       </div>
 
+      <SearchStocksModal open={searchPopupOpen} onClose={() => setSearchPopupOpen(false)} />
+      <button className="trade-button"  onClick={() => setSearchPopupOpen(true)}>
+        Know Your Symbol
+
+      </button>
+
+      <ChatWindow open={chatOpen} onClose={() => setChatOpen(false)} />
       <button className="trade-button"  onClick={() => setChatOpen(true)}>
         Trade with AI
       </button>
-      <ChatWindow open={chatOpen} onClose={() => setChatOpen(false)} />
-
 
       <div className="header-right">
         <div className="user-info">
-          {/* <span className="user-name">{userName.replace(/^"|"$/g, '')}</span> */}
           <span className="user-name">{userName}</span>
           <span className="user-role">Premium Trader</span>
         </div>

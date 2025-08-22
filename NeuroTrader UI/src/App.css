@@ -80,3 +80,12 @@
 .mb_3px{
   margin-bottom: 3px;
 }
+
+.w_50p{
+  width: 50%;
+}
+
+.flex {
+  display: flex;
+  align-items: center; /* vertical align */
+}

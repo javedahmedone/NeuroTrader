@@ -7,6 +7,8 @@ import { TrendingUp } from "lucide-react";
 import Spinner from "../Components/Spinner"; // ✅ Loader component
 import "../Styles/LoginForm.css";
 import "../App.css"; 
+import BrokerConstant from "../Constants/BrokerConstants";
+import Upstox from "../BrokerPages/Upstox/Upstox";
 
 export default function LoginForm() {
   const [role, setRole] = useState("");
@@ -30,16 +32,20 @@ export default function LoginForm() {
     opacity : "80%"
   };
 
-  const roles = [{ label: "Angel One", value: "angelone" }];
+  const roles = [
+    { label: "Angel One", value: BrokerConstant.AngelOne },
+    { label: "Upstox", value: BrokerConstant.Upstox }
+  ];
 
   const handleSubmit = async (e) => {
+    debugger
     e.preventDefault();
     setShowErrors(true); // force red borders
     if (!isFormValid) return;
     if(isFormValid){
       setLoading(true); // ✅ Show loader
     }
-    if (role === "angelone") {
+    if (role === BrokerConstant.AngelOne) {
       const { clientcode, password, totp, apiKey } = angelOneData;
       try {
         const result = await AngelOneApiCollection.loginUser({
@@ -55,10 +61,31 @@ export default function LoginForm() {
         console.error("❌ Login failed:", error);
         alert("Login failed. Please check your credentials.");
       }
-    } else {
+    }
+        else if (role === BrokerConstant.Upstox) {
+      const { apiSecret, password, totp, apiKey } = angelOneData;
+      try {
+        const result = await AngelOneApiCollection.loginUser({
+          apiSecret,
+          password,
+          totp,
+          apiKey,
+          brokerName: role,
+        });
+        console.log("✅ Login success:", result);
+        navigate("/portfolio");
+      } catch (error) {
+        console.error("❌ Login failed:", error);
+        alert("Login failed. Please check your credentials.");
+      }
+    }
+    else {
       alert("Login not implemented for selected role.");
     }
+
+    setLoading(false)
   };
+
 
   return (
     <div
@@ -89,8 +116,16 @@ export default function LoginForm() {
             ))}
           </select>
 
-          {role === "angelone" && (
+          {role === BrokerConstant.AngelOne && (
             <AngelOne
+              onFormChange={setIsFormValid}
+              onFormDataChange={setAngelOneData}
+              showErrors={showErrors}
+            />
+          )}
+
+           {role === BrokerConstant.Upstox && (
+            <Upstox
               onFormChange={setIsFormValid}
               onFormDataChange={setAngelOneData}
               showErrors={showErrors}
