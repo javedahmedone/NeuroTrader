@@ -88,7 +88,6 @@ export default function Portfolio() {
         </div>
 
         <div className={`gain-card ${overAllHoldingsDetails.totalprofitandloss < 0 ? 'negative negative_bg' : ''}`}>
-          <span>isnegative : {isNegative}</span>
           <div className="card-header">
             <Target className={`h-8 w-8 ${isNegative ? 'trending_red' : 'postive'}`} />
             <p className={`title ${isNegative ? 'trending_red' : ''}`}>Total Gain/Loss</p>
