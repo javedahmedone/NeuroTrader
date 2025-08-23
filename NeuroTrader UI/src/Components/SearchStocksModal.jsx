@@ -3,6 +3,7 @@ import "../Styles/SearchStocksModal.css";
 import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import "../App.css"
 import { TrendingUp } from "lucide-react";
+
 const SearchStocksModal = ({ open, onClose }) => {
   const [query, setQuery] = useState("");         // input text
   const [suggestions, setSuggestions] = useState([]); // fetched stocks list
@@ -57,8 +58,8 @@ const SearchStocksModal = ({ open, onClose }) => {
         {/* Stock List */}
         <div className="stock-list">
         <div className="flex">
-            <p className="w_50p">Stock Symbol</p>
-            <p className="w_50p">Company Name</p>
+            <p className="w_50p"><b>Stock Symbol</b></p>
+            <p className="w_50p"><b>Company Name</b></p>
         </div>
           {suggestions.length === 0 && query.length >= 2 ? (
             <p className="no-results">No results found</p>
@@ -69,7 +70,7 @@ const SearchStocksModal = ({ open, onClose }) => {
                   <strong>{stock.symbol}</strong>
                 </div>
                 <div className="w_50p">
-                  <strong>{stock.company_name}</strong>
+                  <span>{stock.company_name}</span  >
                 </div>
               </div>
             ))

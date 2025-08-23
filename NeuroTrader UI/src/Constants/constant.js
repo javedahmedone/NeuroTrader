@@ -13,7 +13,8 @@ const GlobalConstant = {
     BUY :"BUY",
     SELL : "SELL",
     CANCELORDER : "cancelOrder",
-    CANCELALLORDERS : "cancelAllOrders"
+    CANCELALLORDERS : "cancelAllOrders",
+    ANALYZEPORTFOLIO : "analyzePortfolio"
 
   // Add more constants as needed
 };

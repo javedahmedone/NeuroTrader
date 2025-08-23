@@ -55,6 +55,7 @@ const ChatWindow = ({ open, onClose }) => {
       response.data =  userOrdersData.find((order) => order.orderid === orderId) || null;
     }
 
+
     const botTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     let newBotMessage = {
@@ -81,9 +82,13 @@ const ChatWindow = ({ open, onClose }) => {
         case GlobalConstant.CANCELORDER:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.CANCELORDER, data: response.data };
           break;
+        case GlobalConstant.ANALYZEPORTFOLIO:
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.ANALYZEPORTFOLIO, data: response.data };
+          break;
         case GlobalConstant.UNKNOWN:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.UNKNOWN, data: response.data };
           break;
+
         default:
           newBotMessage = { ...newBotMessage, text: "🤔 I couldn't understand that." };
       }

@@ -1,6 +1,7 @@
 import GlobalConstant from "../Constants/constant";
 
 export default function ChatMessage({ message }) {
+  debugger
   if (message.type === GlobalConstant.HOLDINGS) {
     const holdings = Array.isArray(message.data) ? message.data : [message.data];
 
@@ -20,7 +21,23 @@ export default function ChatMessage({ message }) {
     ))}
   </div>
 );
+}
 
+  if (message.type === GlobalConstant.ANALYZEPORTFOLIO) {
+   return (
+    <div>
+      {message.data.split("\n").map((line, i) => (
+        <p key={i}>
+          {line.split(/(\*\*.*?\*\*)/).map((part, j) => {
+            if (part.startsWith("**") && part.endsWith("**")) {
+              return <strong key={j}>{part.slice(2, -2)}</strong>;
+            }
+            return <span key={j}>{part}</span>;
+          })}
+        </p>
+      ))}
+    </div>
+  );
   }
 
   if (message.type === GlobalConstant.UNKNOWN) {
