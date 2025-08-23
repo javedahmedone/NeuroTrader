@@ -5,55 +5,60 @@ import fetchWithAuth from "../../Services/fetchWithAuth.js";
 import fetchWithoutAuth from "../../Services/fetchWithoutAuth.js";
  
 
-// LOGIN FUNCTION
 const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, brokerName }) => {
-  debugger
   try {
-      if (brokerName === "upstox") {
-        debugger
-      // 🔹 Upstox requires redirect flow
-        const result  = await fetch(`${BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        clientcode,
-        password,
-        totp,
-        apiKey,
-        apiSecret,
-        brokerName
-      }),
-    });
-    console.log(result)
-      return; // stop here because browser will redirect
+    debugger
+    let response;
+
+    // 🔹 Common request config
+    const payload = {
+      clientcode,
+      password,
+      totp,
+      apiKey,
+      apiSecret,
+      brokerName,
+    };
+
+    // 🔹 If broker is upstox
+    if (brokerName === "upstox") {
+      response = await fetch(`${BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Upstox login failed");
+      }
+
+      // ⚠️ Don’t just log Response object
+      const result = await response.json();
+      console.log("Upstox login result:", result);
+
+      return result; // ✅ return the parsed result
     }
-    const response = await fetch(`${BASE_URL}/auth/login`, {
+
+    // 🔹 For other brokers
+    response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        clientcode,
-        password,
-        totp,
-        apiKey,
-        apiSecret,
-        brokerName
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
       throw new Error("Login failed");
     }
+
     const result = await response.json();
+
+    // Save tokens to model + sessionStorage
     LoginModel.jwtToken = result?.jwt || null;
     LoginModel.userName = result?.userName || null;
     LoginModel.clientcode = result?.clientcode || null;
     LoginModel.refreshToken = result?.refreshToken || null;
-    LoginModel.brokerName =  result?.brokerName || null;
-    // Store tokens in session
+    LoginModel.brokerName = result?.brokerName || null;
+
     sessionStorage.setItem("jwt", LoginModel.jwtToken);
     sessionStorage.setItem("user", LoginModel.userName);
     sessionStorage.setItem("clientcode", clientcode);
@@ -61,15 +66,14 @@ const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, broker
     sessionStorage.setItem("refreshToken", LoginModel.refreshToken);
     sessionStorage.setItem("feedToken", result?.feedToken || null);
     sessionStorage.setItem("brokerName", brokerName || null);
+
     return result;
   } catch (error) {
     console.error("Login error:", error.message);
     throw error;
   }
-  finally{
-
-  }
 };
+
 
 const AngelOneApiCollection = {
   loginUser: (loginParams) => userLogin(loginParams),

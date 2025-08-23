@@ -37,54 +37,49 @@ export default function LoginForm() {
     { label: "Upstox", value: BrokerConstant.Upstox }
   ];
 
-  const handleSubmit = async (e) => {
-    debugger
-    e.preventDefault();
-    setShowErrors(true); // force red borders
-    if (!isFormValid) return;
-    if(isFormValid){
-      setLoading(true); // ✅ Show loader
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setShowErrors(true); // force red borders
+  if (!isFormValid) return;
+
+  setLoading(true); // ✅ Show loader at the very beginning
+
+  try {
+    let result;
     if (role === BrokerConstant.AngelOne) {
       const { clientcode, password, totp, apiKey } = angelOneData;
-      try {
-        const result = await AngelOneApiCollection.loginUser({
-          clientcode,
-          password,
-          totp,
-          apiKey,
-          brokerName: role,
-        });
-        console.log("✅ Login success:", result);
-        navigate("/portfolio");
-      } catch (error) {
-        console.error("❌ Login failed:", error);
-        alert("Login failed. Please check your credentials.");
-      }
-    }
-        else if (role === BrokerConstant.Upstox) {
+      result = await AngelOneApiCollection.loginUser({
+        clientcode,
+        password,
+        totp,
+        apiKey,
+        brokerName: role,
+      });
+    } else if (role === BrokerConstant.Upstox) {
       const { apiSecret, password, totp, apiKey } = angelOneData;
-      try {
-        const result = await AngelOneApiCollection.loginUser({
-          apiSecret,
-          password,
-          totp,
-          apiKey,
-          brokerName: role,
-        });
-        console.log("✅ Login success:", result);
-        navigate("/portfolio");
-      } catch (error) {
-        console.error("❌ Login failed:", error);
-        alert("Login failed. Please check your credentials.");
-      }
-    }
-    else {
+      result = await AngelOneApiCollection.loginUser({
+        apiSecret,
+        password,
+        totp,
+        apiKey,
+        brokerName: role,
+      });
+    } else {
       alert("Login not implemented for selected role.");
+      return;
     }
 
-    setLoading(false)
-  };
+    console.log("✅ Login success:", result);
+    navigate("/portfolio");
+
+  } catch (error) {
+    console.error("❌ Login failed:", error);
+    alert("Login failed. Please check your credentials.");
+  } finally {
+    setLoading(false); // ✅ Always hide loader when done
+  }
+};
+
 
 
   return (
