@@ -1,7 +1,9 @@
 import GlobalConstant from "../../Constants/constant";
+import BASE_URL from "../../config.js";
 
 export function UseUpstoxLogin() {
-  let redirect_uri = "http://localhost:3000/callback/upstox";
+  console.log(BASE_URL)
+  let redirect_uri = BASE_URL+"/callback/upstox";
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
 
   const login = async (credentials) => {
