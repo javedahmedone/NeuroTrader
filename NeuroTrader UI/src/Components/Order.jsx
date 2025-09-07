@@ -33,8 +33,8 @@ export default function Order () {
         if(response.message === GlobalConstant.InvalidToken){
           LoggedOutUser(navigate);
         }
-        if(response.length != 0){
-          setUserOrders(response)
+        if(response.data != null){
+          setUserOrders(response.data)
         }
         console.log("✅ All data fetched",response);
       } catch (error) {
@@ -74,9 +74,6 @@ export default function Order () {
     fetchAllData();
   }, []);
 
-  // if (loading) {
-  //   return <Spinner />;
-  // }
   return (
     <div className="orders-container">
       <h2>Orders <span className="badge">{userOrders.length}</span></h2>
@@ -84,22 +81,21 @@ export default function Order () {
     <div className="table-wrapper">
       <table className="orders-table">
         <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Status</th>
-            <th>Order Status</th>
-            <th>Order Time</th>
-            <th>Transaction Type</th>
-            <th>Cancel Order</th>
-
+        <tr>
+            <th className="font_18">Symbol</th>
+            <th className="font_18">Name</th>
+            <th className="font_18">Quantity</th>
+            <th className="font_18">Status</th>
+            <th className="font_18">Order Status</th>
+            <th className="font_18">Order Time</th>
+            <th className="font_18">Transaction Type</th>
+            <th className="font_18">Cancel Order</th>
           </tr>
         </thead>
         <tbody>
           {userOrders.map((order, i) => (
             <tr key={i}>
-              <td>{order.symbol}</td>
+              <td><b>{order.symbol}</b></td>
               <td>{order.name}</td>
               <td>{order.quantity}</td>
               <td>{order.status}</td>

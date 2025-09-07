@@ -3,13 +3,10 @@ import BASE_URL from "../../config.js";
 import LoginModel from "../../Model/LoginModel.js";
 import fetchWithAuth from "../../Services/fetchWithAuth.js";
 import fetchWithoutAuth from "../../Services/fetchWithoutAuth.js";
- 
 
-const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, brokerName }) => {
+const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, code ,brokerName }) => {
   try {
-    debugger
     let response;
-
     // 🔹 Common request config
     const payload = {
       clientcode,
@@ -17,27 +14,9 @@ const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, broker
       totp,
       apiKey,
       apiSecret,
+      code,
       brokerName,
     };
-
-    // 🔹 If broker is upstox
-    if (brokerName === "upstox") {
-      response = await fetch(`${BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("Upstox login failed");
-      }
-
-      // ⚠️ Don’t just log Response object
-      const result = await response.json();
-      console.log("Upstox login result:", result);
-
-      return result; // ✅ return the parsed result
-    }
 
     // 🔹 For other brokers
     response = await fetch(`${BASE_URL}/auth/login`, {

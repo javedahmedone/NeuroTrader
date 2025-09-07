@@ -4,19 +4,23 @@ import AngelOne from "../BrokerPages/AngelOne/AngelOne";
 import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
 import tradingBackground from "../Assets/trading-background.jpg";
 import { TrendingUp } from "lucide-react";
-import Spinner from "../Components/Spinner"; // ✅ Loader component
+import Spinner from "../Components/Spinner";
 import "../Styles/LoginForm.css";
-import "../App.css"; 
+import "../App.css";
 import BrokerConstant from "../Constants/BrokerConstants";
 import Upstox from "../BrokerPages/Upstox/Upstox";
+import { UseUpstoxLogin } from "../BrokerPages/Upstox/UseUpstoxLogin";
 
 export default function LoginForm() {
   const [role, setRole] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [angelOneData, setAngelOneData] = useState({});
   const [showErrors, setShowErrors] = useState(false);
+  const [credentials, setCredentials] = useState({});
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false); // ✅ Loader state
+  const [loading, setLoading] = useState(false);
+  const upstoxLogin = UseUpstoxLogin();
+
   const loaderOverlayStyle = {
     position: "absolute",
     top: 0,
@@ -29,58 +33,59 @@ export default function LoginForm() {
     justifyContent: "center",
     alignItems: "center",
     zIndex: 10,
-    opacity : "80%"
+    opacity: "80%",
   };
 
   const roles = [
     { label: "Angel One", value: BrokerConstant.AngelOne },
-    { label: "Upstox", value: BrokerConstant.Upstox }
+    { label: "Upstox", value: BrokerConstant.Upstox },
   ];
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setShowErrors(true); // force red borders
-  if (!isFormValid) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setShowErrors(true);
+    if (!isFormValid && role === BrokerConstant.AngelOne) return;
 
-  setLoading(true); // ✅ Show loader at the very beginning
+    setLoading(true);
 
-  try {
-    let result;
-    if (role === BrokerConstant.AngelOne) {
-      const { clientcode, password, totp, apiKey } = angelOneData;
-      result = await AngelOneApiCollection.loginUser({
-        clientcode,
-        password,
-        totp,
-        apiKey,
-        brokerName: role,
-      });
-    } else if (role === BrokerConstant.Upstox) {
-      const { apiSecret, password, totp, apiKey } = angelOneData;
-      result = await AngelOneApiCollection.loginUser({
-        apiSecret,
-        password,
-        totp,
-        apiKey,
-        brokerName: role,
-      });
-    } else {
-      alert("Login not implemented for selected role.");
-      return;
+    try {
+      let result;
+
+      if (role === BrokerConstant.AngelOne) {
+        const { clientcode, password, totp, apiKey } = angelOneData;
+        result = await AngelOneApiCollection.loginUser({
+          clientcode,
+          password,
+          totp,
+          apiKey,
+          brokerName: role,
+        });
+        console.log("✅ Login success:", result);
+      navigate("/portfolio");
+      } else if (role === BrokerConstant.Upstox) {
+        if (!credentials.apiKey || !credentials.apiSecret) {
+          alert("Please provide API Key & Secret");
+          return;
+        }
+        const token = await upstoxLogin(credentials);
+        result = { token };
+        console.log("✅ Login success:", result);
+        if(token){
+          navigate("/portfolio");
+        }
+      } else {
+        alert("Login not implemented for selected role.");
+        return;
+      }
+
+      
+    } catch (error) {
+      console.error("❌ Login failed:", error);
+      alert("Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
     }
-
-    console.log("✅ Login success:", result);
-    navigate("/portfolio");
-
-  } catch (error) {
-    console.error("❌ Login failed:", error);
-    alert("Login failed. Please check your credentials.");
-  } finally {
-    setLoading(false); // ✅ Always hide loader when done
-  }
-};
-
-
+  };
 
   return (
     <div
@@ -119,12 +124,8 @@ const handleSubmit = async (e) => {
             />
           )}
 
-           {role === BrokerConstant.Upstox && (
-            <Upstox
-              onFormChange={setIsFormValid}
-              onFormDataChange={setAngelOneData}
-              showErrors={showErrors}
-            />
+          {role === BrokerConstant.Upstox && (
+            <Upstox onCredentialsChange={setCredentials} />
           )}
 
           {role && (
@@ -132,10 +133,11 @@ const handleSubmit = async (e) => {
               Login
             </button>
           )}
+
           {loading && (
-                    <div style={loaderOverlayStyle}>
-                      <Spinner />
-                    </div>
+            <div style={loaderOverlayStyle}>
+              <Spinner />
+            </div>
           )}
         </form>
       </div>

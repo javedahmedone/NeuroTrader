@@ -16,7 +16,6 @@ const SearchStocksModal = ({ open, onClose }) => {
 
     const fetchSuggestions = async () => {
       try {
-        debugger
         const res = await AngelOneApiCollection.fetchStocks(query);
         if(res.length> 0){
             setSuggestions(res);  // ✅ store results in suggestions

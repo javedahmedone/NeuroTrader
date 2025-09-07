@@ -1,12 +1,13 @@
 import BASE_URL from "../config.js";
+import GlobalConstant from "../Constants/constant.js";
 
 const fetchWithAuth = async (endpoint, options = {}) => {
-  const jwt = sessionStorage.getItem("jwt");
-  const apiKey = sessionStorage.getItem("apikey");
+  const jwt = sessionStorage.getItem(GlobalConstant.JWT);
+  const apiKey = sessionStorage.getItem(GlobalConstant.APIKEY);
   const clientcode = sessionStorage.getItem("clientcode");
   const refreshToken = sessionStorage.getItem("refreshToken");
-  const brokerName = sessionStorage.getItem("brokerName");
-
+  const brokerName = sessionStorage.getItem(GlobalConstant.BROKERNAME);
+  // const apiSecret =  sessionStorage.getItem(GlobalConstant.APISECRET)
   // Inject headers
   const headers = {
     "Content-Type": "application/json",
@@ -14,7 +15,8 @@ const fetchWithAuth = async (endpoint, options = {}) => {
     "Authorization": jwt || "",
     "clientcode": clientcode || "",
     "refresh": refreshToken || "",
-    "brokername": brokerName || ""
+    "brokername": brokerName || "",
+    // "apiSecret" : apiSecret || ""
   };
 
   // Merge default headers with passed options

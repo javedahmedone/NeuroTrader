@@ -39,9 +39,9 @@ const ChatWindow = ({ open, onClose }) => {
     setLoading(true); // ✅ Show loader overlay
 
     try {
+      debugger
       let response = await AngelOneApiCollection.fetchUserPromtData(userMessage.text);
       console.log("AI Response:", response);
-
     if (
       response === null ||    response.data === null || 
       (response.data.success === false && response.data.message === GlobalConstant.InvalidToken)
@@ -49,13 +49,22 @@ const ChatWindow = ({ open, onClose }) => {
       LoggedOutUser(navigate);
       return;
     }
+    
+      if(response.statusCode === 401){
+        LoggedOutUser(navigate);
+        return;
+      }
+    
     else if(response.userIntent === GlobalConstant.CANCELORDER){
-      const orderId =  response.data.data.orderid;
-      let userOrdersData = await AngelOneApiCollection.fetchUserOrders();
-      response.data =  userOrdersData.find((order) => order.orderid === orderId) || null;
+      if(response.status === GlobalConstant.ERROR){
+        response.userIntent = GlobalConstant.CANCELORDERERROR
+      }
+      else{
+        const orderId =  response.data.data.orderid;
+        let userOrdersData = await AngelOneApiCollection.fetchUserOrders();
+        response.data =  userOrdersData.find((order) => order.orderid === orderId) || null;
+      } 
     }
-
-
     const botTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     let newBotMessage = {
@@ -68,16 +77,16 @@ const ChatWindow = ({ open, onClose }) => {
           newBotMessage = { ...newBotMessage, type: GlobalConstant.HOLDINGS, data: response.data };
           break;
         case GlobalConstant.SELLORDER:
-          newBotMessage = { ...newBotMessage, type: GlobalConstant.SELLORDER, data: response.data };
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.SELLORDER, data: response };
           break;
         case GlobalConstant.BUYORDER:
-          newBotMessage = { ...newBotMessage, type: GlobalConstant.BUYORDER, data: response.data };
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.BUYORDER, data: response };
           break;
         case GlobalConstant.GETORDERS || GlobalConstant.CANCELALLORDERS:
-          newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response.data };
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response };
           break;
         case  GlobalConstant.CANCELALLORDERS:
-          newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response.data };
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.GETORDERS, data: response };
           break;
         case GlobalConstant.CANCELORDER:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.CANCELORDER, data: response.data };
@@ -88,7 +97,12 @@ const ChatWindow = ({ open, onClose }) => {
         case GlobalConstant.UNKNOWN:
           newBotMessage = { ...newBotMessage, type: GlobalConstant.UNKNOWN, data: response.data };
           break;
-
+        case GlobalConstant.CANCELORDERERROR:
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.CANCELORDERERROR, data: response };
+          break;
+        case GlobalConstant.VALIDATIONERROR:
+          newBotMessage = { ...newBotMessage, type: GlobalConstant.VALIDATIONERROR, data: response };
+          break;
         default:
           newBotMessage = { ...newBotMessage, text: "🤔 I couldn't understand that." };
       }
@@ -134,6 +148,7 @@ const ChatWindow = ({ open, onClose }) => {
           ))}
           <div ref={chatEndRef} />
         </div>
+        <div className="warning"> Note : AI can predict wrong stock name , so suggest you to use stock symbol instead of name , you can find symbol from Know Your Symbol button</div>
 
         <div className="chat-input-area">
           <input

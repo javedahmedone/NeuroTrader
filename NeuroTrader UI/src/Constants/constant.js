@@ -14,7 +14,14 @@ const GlobalConstant = {
     SELL : "SELL",
     CANCELORDER : "cancelOrder",
     CANCELALLORDERS : "cancelAllOrders",
-    ANALYZEPORTFOLIO : "analyzePortfolio"
+    ANALYZEPORTFOLIO : "analyzePortfolio",
+    JWT : "jwt",
+    APIKEY : "apikey",
+    BROKERNAME : "brokerName",
+    APISECRET : "apiSecret",
+    ERROR : "error",
+    CANCELORDERERROR:"cancelOrderError",
+    VALIDATIONERROR:"validationError"
 
   // Add more constants as needed
 };

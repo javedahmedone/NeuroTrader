@@ -1,10 +1,12 @@
 import GlobalConstant from "../Constants/constant";
-
 export default function ChatMessage({ message }) {
-  debugger
   if (message.type === GlobalConstant.HOLDINGS) {
     const holdings = Array.isArray(message.data) ? message.data : [message.data];
-
+    if(holdings.length == 0){
+      return(
+        <div className="font_18">You don't have any holdings</div>
+      );
+    }
    return (
   <div>
     <div className="font_18"><strong>📊 Holding Summary</strong></div>
@@ -40,39 +42,44 @@ export default function ChatMessage({ message }) {
   );
   }
 
-  if (message.type === GlobalConstant.UNKNOWN) {
+  if (message.type === GlobalConstant.CANCELORDERERROR) {
+    const orders = Array.isArray(message.data) ? message.data : [message.data];
     return (
-      <div>
-        Sorry, I didn’t understand that
-        {/* 📈 Current price of <strong>{stock}</strong> is ₹{price} */}
-      </div>
+      <div className="font_18"><b>Error: </b>   {orders[0].errorMessage}</div>
+    );
+  }
+
+   if (message.type === GlobalConstant.UNKNOWN) {
+    return (
+      <div>Sorry, I didn’t understand that </div>
+    );
+  }
+
+    if (message.type === GlobalConstant.VALIDATIONERROR) {
+    return (
+      <div className="font_18"> <b>Error</b>:  {message.data.errorMessage} </div>
     );
   }
 
   if (message.type === GlobalConstant.BUYORDER || message.type == GlobalConstant.GETORDERS || message.type == GlobalConstant.SELLORDER || message.type === GlobalConstant.CANCELORDER) {
-    
-    const orders = Array.isArray(message.data) ? message.data : [message.data];
+    if(message.data.status === GlobalConstant.ERROR){
+      const errorMessage = message.data.errorMessage
+      if(errorMessage.toLowerCase().includes("authorised") || errorMessage.toLowerCase().includes("edis")){
+        return(
+          <div> Please setup you TPIN from your app, or try to sell one order from your broker</div>
+        );
+      }
+      else{
+        return(
+          <div className="font_18"><b>Error:</b> {errorMessage} </div>
+        );
+      }
+    }
+    const orders = Array.isArray(message.data.data) ? message.data.data : [message.data.data];
+
     if(orders.length == 0){
       return(
         <div> No orders to show</div>
-      );
-    }
-    if(orders[0].status === false){
-      const message = orders[0].message
-      return(
-        <div>{message}</div>
-      );
-    }
-    if(orders[0].success === false){
-      const message = orders[0].message
-      const errorMessage =  orders[0].error
-      if(message.toLowerCase().includes("authorised") || message.toLowerCase().includes("edis") )
-       return(
-        <div> Please setup you TPIN from your app, or try to sell one order from your broker</div>
-      );
-      if(errorMessage === "CODE01" )
-       return(
-        <div>{message}</div>
       );
     }
    return (
@@ -86,6 +93,8 @@ export default function ChatMessage({ message }) {
         <div className="font_18"><b>Quantity:</b> {item.quantity}</div>
         <div className="font_18"><b>Status:</b> {item.status}</div>
         <div className="font_18"><b>Order Status:</b> {item.orderstatus}</div>
+        <div className="font_18"><b>Order type:</b> {item.orderType}</div>
+
         <div className="font_18"><b> Order Id:</b> {item.orderid}</div>
         <div className="font_18"><b>Transaction type:</b> {item.transactiontype}</div>
         {item.text && item.text.trim() !== "" && (

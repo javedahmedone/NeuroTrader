@@ -35,11 +35,11 @@ export default function Holdings() {
    const fetchAllData = async () => {
       try {
         const response = await AngelOneApiCollection.fetchUserHoldings();
-        if (response.message === GlobalConstant.InvalidToken) {
+        if (response.statusCode === 401) {
           LoggedOutUser(navigate);
         }
-        const data = new HoldingsResponse(response);
-        setUserHoldingsData(data.holdings || []);
+        const data = new HoldingsResponse(response.data);
+        setUserHoldingsData(response.data.holdings || []);
         console.log("✅ All data fetched", data);
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
@@ -59,7 +59,7 @@ export default function Holdings() {
   }, []);
 
 
-const handleOrder = async (symbol, token, index, transactionType) => {
+const handleOrder = async (symbol, token, index, transactionType, isinNumber) => {
   setLoading(true); // ✅ Hide loader after fetch
   let quantities = [];
   if(transactionType === GlobalConstant.BUY){
@@ -75,12 +75,13 @@ const handleOrder = async (symbol, token, index, transactionType) => {
     instrumenttype: "",
     token,
     quantity: qty,
-    transactionType: transactionType
+    transactionType: transactionType,
+    isinNumber : isinNumber
   };
   try {
     const response = await AngelOneApiCollection.placeOrder(data); // ✅ waits here
-    if (response && response.success === false) {
-      alert(response.message);
+    if (response.status === GlobalConstant.ERROR) {
+      alert(response.errorMessage);
     } else {
       console.log("Order placed successfully:", response);
       fetchAllData();
@@ -95,12 +96,6 @@ const handleOrder = async (symbol, token, index, transactionType) => {
       setLoading(false); // ✅ Hide loader after fetch
   }
 };
-
-
-  // ✅ Show loader until data is fetched
-  // if (loading) {
-  //   return <Spinner />;
-  // }
 
   return (
     <div className="holdings-container">
@@ -148,7 +143,7 @@ const handleOrder = async (symbol, token, index, transactionType) => {
                         placeholder="enter quantity to buy"
                       />
                       <button className="btn green" title="Click To Buy"
-                        onClick={() => handleOrder(h.tradingsymbol, h.symboltoken, i, GlobalConstant.BUY)}>
+                        onClick={() => handleOrder(h.tradingsymbol, h.symboltoken, i, GlobalConstant.BUY,h.isin)}>
                           Buy
                       </button>
                     </td>
@@ -164,7 +159,7 @@ const handleOrder = async (symbol, token, index, transactionType) => {
                           })}
                       />
                       <button className="btn red" title="Click Here to Sell"
-                        onClick={() => handleOrder(h.tradingsymbol, h.symboltoken, i, GlobalConstant.SELL)}>
+                        onClick={() => handleOrder(h.tradingsymbol, h.symboltoken, i, GlobalConstant.SELL, h.isin)}>
                           Sell
                       </button>
                     </td>

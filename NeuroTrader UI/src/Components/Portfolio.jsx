@@ -11,7 +11,7 @@ import "../Styles/Portfolio.css";
 import "../App.css"; 
 
 export default function Portfolio() {
-  const [uesrHoldingsData, setUserHoldingsData] = useState([]);
+  const [userHoldingsData, setUserHoldingsData] = useState([]);
   const [overAllHoldingsDetails, setOverAllHoldingsDetails] = useState(null);
   const [error, setError] = useState(null);
   const hasFetched = useRef(false);
@@ -25,19 +25,21 @@ export default function Portfolio() {
 
     const fetchAllData = async () => {
       try {
-        debugger
         const response = await AngelOneApiCollection.fetchUserHoldings();
-        if(response.message === GlobalConstant.InvalidToken){
+        if(response.message === GlobalConstant.InvalidToken || response.statusCode === 401){
           LoggedOutUser(navigate);
         }
-        const data = new HoldingsResponse(response);
-        setUserHoldingsData(data.holdings || []);
-        setOverAllHoldingsDetails(data.totalholding || new TotalHolding());
-        if(data.totalholding != null){
-          let result = data.totalholding.totalpnlpercentage<0?true:false;
-          setIsNegative(result)
-        }
-        console.log("✅ All data fetched",data);
+        if(response.data != null && response.data.holdings != null){
+          const data = new HoldingsResponse(response.data);
+          setUserHoldingsData(response.data.holdings || []);
+          setOverAllHoldingsDetails(response.data.totalholding || new TotalHolding());
+          if(response.data.totalholding != null){
+            let result = response.data.totalholding.totalpnlpercentage<0?true:false;
+            setIsNegative(result)
+          }
+          console.log("✅ All data fetched",data);
+
+      }
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
         if(err.message.includes('401')){
@@ -56,9 +58,6 @@ export default function Portfolio() {
     return <div className="portfolio-container"><p>{error}</p></div>;
   }
 
-  // if (!overAllHoldingsDetails) {
-  //   return <div className="portfolio-container"><p>Loading portfolio...</p></div>;
-  // }
     if (loading) {
     return <Spinner />;
   }
@@ -74,33 +73,37 @@ export default function Portfolio() {
             <p className="title">Portfolio Value</p>
           </div>
           <h2 className="amount">
-            ₹{overAllHoldingsDetails.totalholdingvalue?.toFixed(2) ?? "0.00"}
+            ₹{overAllHoldingsDetails ? overAllHoldingsDetails.totalholdingvalue?.toFixed(2) : "0.00"}
           </h2>
         </div>
 
         <div className="change-card pointer" onClick={() => navigate("/Order")}>
           <div className="card-header">
-            <Aperture className={`h-8 w-8 ${overAllHoldingsDetails.totalprofitandloss >= 0 ? 'treding_up_green' : 'trending_red'}`} />
+            <Aperture className={`h-8 w-8 ${overAllHoldingsDetails?.totalprofitandloss >= 0 ? 'treding_up_green' : 'trending_red'}`} />
             <p className="title">Orders</p>
           </div>
           <h2 className="amount"></h2>
           <p className="percent">Click here to view open orders</p>
         </div>
 
-        <div className={`gain-card ${overAllHoldingsDetails.totalprofitandloss < 0 ? 'negative negative_bg' : ''}`}>
+        <div className={`gain-card ${overAllHoldingsDetails?.totalprofitandloss < 0 ? 'negative negative_bg' : ''}`}>
           <div className="card-header">
             <Target className={`h-8 w-8 ${isNegative ? 'trending_red' : 'postive'}`} />
             <p className={`title ${isNegative ? 'trending_red' : ''}`}>Total Gain/Loss</p>
           </div>
-          <h2 className="amount">₹{overAllHoldingsDetails.totalprofitandloss?.toFixed(2) ?? "+0.00"}</h2>
-          <p className={`percent ${isNegative ? 'trending_red' : ''}`}>({overAllHoldingsDetails.totalpnlpercentage?.toFixed(2) ?? 0}%)</p>
+          <h2 className="amount">₹{overAllHoldingsDetails?.totalprofitandloss?.toFixed(2) ?? "+0.00"}</h2>
+          <p className={`percent ${isNegative ? 'trending_red' : ''}`}>({overAllHoldingsDetails?.totalpnlpercentage?.toFixed(2) ?? 0}%)</p>
         </div>
-        <div className="position-card" onClick={() => navigate("/holdings")} >
+        <div className="position-card" onClick={() =>{ 
+            if (overAllHoldingsDetails) {
+            navigate("/holdings");
+            }
+          }} >
           <div className="card-header">
             <PieChart className="h-8 w-8 text-purple-600" />
             <p className="position_title">Positions</p>
           </div>
-          <h2 className="amount">{uesrHoldingsData.length}</h2>
+          <h2 className="amount">{userHoldingsData.length}</h2>
           <p className="holding_text">Active Holdings</p>
         </div>
       </div>
@@ -109,16 +112,12 @@ export default function Portfolio() {
 
       {/* Dashboard Sections (static for now) */}
       <div className="dashboard">
-        {/* Gainers */}
-
-        {/* Losers */}
         <div className="section losers">
           <div className="gainers-header">
             <h3 >Top Holdings</h3>
           </div>
           <div className="stocks-list">
-            {uesrHoldingsData.map((holding, index) => (
-              
+            {userHoldingsData && userHoldingsData.map((holding, index) => (       
               <div className="stock" key={index}>
                 <div className="info">
                   <strong>{holding.tradingsymbol}</strong>
