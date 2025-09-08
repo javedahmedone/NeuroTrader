@@ -3,7 +3,7 @@ import BASE_URL from "../../config.js";
 
 export function UseUpstoxLogin() {
   console.log(BASE_URL)
-  let redirect_uri = BASE_URL+"/callback/upstox";
+  let redirect_uri = BASE_URL+"/auth/callback/upstox";
   const encodedRedirectUri = encodeURIComponent(redirect_uri);
 
   const login = async (credentials) => {
