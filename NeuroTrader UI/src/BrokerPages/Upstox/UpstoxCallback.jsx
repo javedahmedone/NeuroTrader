@@ -12,8 +12,8 @@ export default function UpstoxCallback() {
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (hasRun.current) return;   // 👈 skip 2nd call
-    hasRun.current = true;
+    // if (hasRun.current) return;   // 👈 skip 2nd call
+    // hasRun.current = true;
     const params = new URLSearchParams(window.location.search);
     const paramsCode = params.get("code");
 
