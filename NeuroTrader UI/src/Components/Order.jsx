@@ -104,7 +104,7 @@ export default function Order () {
               
               <td>{order.transactiontype}</td>            
              <td>
-            {order.status === "open" ? (
+            {order.status === "open" || order.status.includes("received") ? (
               <button onClick={() =>cancelOrder(order.orderid)} >Cancel order</button>
             ) : (
               <span title="you cannot cancel order which is processed by broker">Cancel order</span>
