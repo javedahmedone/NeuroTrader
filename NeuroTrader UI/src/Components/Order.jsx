@@ -66,6 +66,9 @@ export default function Order () {
         console.error("❌ Error cancelling order:", error);
         alert("Error cancelling order. Please try again.");
       }
+      finally{
+         setLoading(false);
+      }
     };
 
   useEffect(() => {
