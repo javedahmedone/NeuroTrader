@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../Styles/Spinner.css"; // ✅ Import CSS
 
 export default function Spinner() {
   const messages = [
     "Integrating with broker",
+    "Integration successful",
     "Getting info from your broker",
+    "Info fetched successfully ",
     "Analyzing portfolio",
+    "analyzed successfully"
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

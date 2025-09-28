@@ -69,6 +69,7 @@ body {
   color: white;
   padding: 20px;
   border-radius: 12px;
+  height: 260px;
 }
 
 .actions h3 {
@@ -545,4 +546,22 @@ button {
 .flex{
       display: flex;
     justify-content: space-between;
+}
+
+.stocks-list {
+  max-height: 200px;   /* Limit height */
+  overflow-y: auto;    /* Enable vertical scroll */
+  padding-right: 5px;  /* Prevent scrollbar overlap */
+}
+
+/* Optional: style scrollbar (Webkit browsers like Chrome, Edge, Safari) */
+.stocks-list::-webkit-scrollbar {
+  width: 6px;
+}
+.stocks-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+.stocks-list::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
