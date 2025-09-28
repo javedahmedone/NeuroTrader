@@ -51,3 +51,19 @@ code {
 .mr_10 {
     margin-right: 10px;
 }
+
+.color_black{
+    color: black !important;
+}
+
+.loss {
+    color: #ff4444 !important;
+}
+
+.ft_700{
+    font-weight: 700 !important;
+}
+
+.mt_2p{
+    margin-top: 2% !important;
+}

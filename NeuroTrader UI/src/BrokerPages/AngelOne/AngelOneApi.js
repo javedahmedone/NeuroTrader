@@ -28,16 +28,13 @@ const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, code ,
     if (!response.ok) {
       throw new Error("Login failed");
     }
-
     const result = await response.json();
-
     // Save tokens to model + sessionStorage
     LoginModel.jwtToken = result?.jwt || null;
     LoginModel.userName = result?.userName || null;
     LoginModel.clientcode = result?.clientcode || null;
     LoginModel.refreshToken = result?.refreshToken || null;
     LoginModel.brokerName = result?.brokerName || null;
-
     sessionStorage.setItem("jwt", LoginModel.jwtToken);
     sessionStorage.setItem("user", LoginModel.userName);
     sessionStorage.setItem("clientcode", clientcode);
@@ -53,13 +50,14 @@ const userLogin = async ({ clientcode, password, totp, apiKey, apiSecret, code ,
   }
 };
 
-
 const AngelOneApiCollection = {
   loginUser: (loginParams) => userLogin(loginParams),
   fetchUserProfile: () => fetchWithAuth("/portfolio/profile", { method: "GET" }),
   fetchUserHoldings: () => fetchWithAuth("/portfolio/holdings", { method: "GET" }),
   fetchUserOrders: () => fetchWithAuth("/portfolio/orders", { method: "GET" }),
   fetchStocks: (query) =>fetchWithoutAuth(`/stock/search?query=${encodeURIComponent(query)}`),
+  fetchMarketMovers: () =>fetchWithoutAuth("/marketData/marketMovers", { method: "GET" }),
+
   cancelUserOrders: (cancelOrderRequestModel) =>
   fetchWithAuth("/portfolio/cancelOrder", {
     method: "POST",

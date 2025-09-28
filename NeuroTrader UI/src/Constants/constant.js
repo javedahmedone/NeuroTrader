@@ -21,7 +21,9 @@ const GlobalConstant = {
     APISECRET : "apiSecret",
     ERROR : "error",
     CANCELORDERERROR:"cancelOrderError",
-    VALIDATIONERROR:"validationError"
+    VALIDATIONERROR:"validationError",
+    GAINERS : "gainers",
+    LOSERS : "loosers"
 
   // Add more constants as needed
 };

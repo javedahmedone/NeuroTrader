@@ -445,7 +445,7 @@ h2 {
     background-color: #fff;
     padding: 20px;
     border-color: #e7dbdb;
-    border-radius: 10px;
+    border-radius: 15px;
     border-style: solid;
     border-width: thin;
 }
@@ -455,7 +455,7 @@ h2 {
 }
 
 .losers {
-  width: 70%; /* customize width here */
+  width: 35%; /* customize width here */
 }
 
 .actions {
@@ -482,7 +482,7 @@ h2 {
 
 .info span {
   font-size: 0.9em;
-  color: #ccc;
+  color: black;
 }
 
 .price {
@@ -495,11 +495,7 @@ h2 {
 }
 
 .gain {
-  color: #00ff88;
-}
-
-.loss {
-  color: #ff4444;
+  color: #04b488 !important;
 }
 
 button {
@@ -544,4 +540,9 @@ button {
 }
 .postive{
   color: #047857;
+}
+
+.flex{
+      display: flex;
+    justify-content: space-between;
 }
