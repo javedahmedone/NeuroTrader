@@ -157,7 +157,7 @@ export default function Portfolio() {
                 </div>
                 <div className="info flex mt_2p">
                   <span className="color_black">  {holding.symbol}     </span >
-                  <span className="loss ft_700">{holding.todayPriceChange} ({holding.perChange}%)</span>
+                  <span className="loss ft_700">+ {holding.todayPriceChange} (+ {holding.perChange}%)</span>
                 </div>
               </div>
             ))}
