@@ -1,27 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/SearchStocksModal.css";
 import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
-import "../App.css";
+import "../App.css"
 import { TrendingUp } from "lucide-react";
 
-const SearchStocksModal = ({ open, onClose }) => {
+const StockTokenModel = ({ open, onClose }) => {
   const [query, setQuery] = useState("");         // input text
   const [suggestions, setSuggestions] = useState([]); // fetched stocks list
-
-  // ✅ Move this OUTSIDE of useEffect
-  const handleStockClick = (stock) => {
-    console.log("Clicked stock:", stock);
-
-    const payload = {
-      symbol: stock.symbol,
-      company: stock.company_name,
-      isin: stock.isinNumber,
-      token: stock.token,
-    };
-
-    // Example: send this payload somewhere
-    // sendStockData(payload);
-  };
 
   useEffect(() => {
     if (query.length < 2) {
@@ -32,8 +17,8 @@ const SearchStocksModal = ({ open, onClose }) => {
     const fetchSuggestions = async () => {
       try {
         const res = await AngelOneApiCollection.fetchStocks(query);
-        if (res.length > 0) {
-          setSuggestions(res);
+        if(res.length> 0){
+            setSuggestions(res);  // ✅ store results in suggestions
         }
       } catch (err) {
         console.error("Error fetching suggestions:", err);
@@ -42,6 +27,7 @@ const SearchStocksModal = ({ open, onClose }) => {
 
     // debounce fetch (wait 300ms after typing stops)
     const delayDebounce = setTimeout(fetchSuggestions, 300);
+
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
@@ -52,9 +38,7 @@ const SearchStocksModal = ({ open, onClose }) => {
       <div className="modal">
         {/* Header */}
         <div className="modal-header">
-          <span className="modal-title">
-            <TrendingUp /> Search Stocks
-          </span>
+          <span className="modal-title"><TrendingUp></TrendingUp> Search Stocks</span>
           <button className="close-btn" onClick={onClose}>
             ✖
           </button>
@@ -72,31 +56,20 @@ const SearchStocksModal = ({ open, onClose }) => {
 
         {/* Stock List */}
         <div className="stock-list">
-          <div className="flex">
+        <div className="flex">
             <p className="w_50p"><b>Stock Symbol</b></p>
             <p className="w_50p"><b>Company Name</b></p>
-          </div>
+        </div>
           {suggestions.length === 0 && query.length >= 2 ? (
             <p className="no-results">No results found</p>
           ) : (
             suggestions.map((stock, idx) => (
-              <div
-                key={idx}
-                className="stock-item cursor-pointer"
-                onClick={() =>
-                  handleStockClick({
-                    symbol: stock.stockSymbol,
-                    company_name: stock.stockName,
-                    isinNumber: stock.isinNumber,
-                    token: stock.stockToken,
-                  })
-                }
-              >
+              <div key={idx} className="stock-item">
                 <div className="w_50p">
-                  <strong>{stock.stockSymbol}</strong>
+                  <strong>{stock.symbol}</strong>
                 </div>
                 <div className="w_50p">
-                  <span>{stock.stockName}</span>
+                  <span>{stock.company_name}</span  >
                 </div>
               </div>
             ))
@@ -107,4 +80,4 @@ const SearchStocksModal = ({ open, onClose }) => {
   );
 };
 
-export default SearchStocksModal;
+export default StockTokenModel;

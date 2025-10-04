@@ -6,6 +6,7 @@ import TotalHolding from "../Model/TotalHolding";
 import GlobalConstant from "../Constants/constant";
 import LoggedOutUser from "./Logout";
 import { useNavigate } from 'react-router-dom';
+import SearchStocksModal from "./SearchStocksModal";
 import Spinner from "../Components/Spinner"; 
 import "../Styles/Portfolio.css";
 import "../App.css"; 
@@ -21,11 +22,12 @@ export default function Portfolio() {
   const navigate = useNavigate();
   const [isNegative, setIsNegative] = useState(false);
   const [loading, setLoading] = useState(true); // ✅ Loader state
+  const [searchPopupOpen, setSearchPopupOpen] = useState(false);
 
   useEffect(() => {
+    debugger
     if (hasFetched.current) return;
     hasFetched.current = true;
-
     const fetchAllData = async () => {
       try {
         const response = await AngelOneApiCollection.fetchUserHoldings();
@@ -38,16 +40,14 @@ export default function Portfolio() {
           setOverAllHoldingsDetails(response.data.totalholding || new TotalHolding());
           if(response.data.totalholding != null){
             let result = response.data.totalholding.totalpnlpercentage<0?true:false;
-            setIsNegative(result);
-            let marketData =  await AngelOneApiCollection.fetchMarketMovers()
-            if(marketData != null && marketData.statusCode == 200 ){
-              debugger
-              setTopGainers(marketData.data[0].gainers);
-              setTopLosers(marketData.data[1].losers);
-            }
-
+            setIsNegative(result);  
           }
           console.log("✅ All data fetched",data);
+        }
+        let marketData =  await AngelOneApiCollection.fetchMarketMovers()
+        if(marketData != null && marketData.statusCode == 200 ){
+          setTopGainers(marketData.data[0].gainers);
+          setTopLosers(marketData.data[1].losers);
         }
       } catch (err) {
         console.error("❌ Error fetching portfolio data:", err);
@@ -72,9 +72,17 @@ export default function Portfolio() {
 
   return (
     <div className="portfolio-container">
-      <h2 className="section-title">Portfolio Overview</h2>
+        <div className="search-box"  onClick={() => setSearchPopupOpen(true)}>
+          <i className="fa fa-search"></i>
+          <input type="text" placeholder="Search Stocks..." />
+        </div>
+        <SearchStocksModal
+        open={searchPopupOpen}
+        onClose={() => setSearchPopupOpen(false)}
+      />
+        <h2 className="section-title">Portfolio Overview</h2>
 
-      <div className="summary-grid">
+        <div className="summary-grid">
         <div className="portfolio-card">
           <div className="card-header">
             <IndianRupee className="h-8 w-8 blue" />
@@ -114,6 +122,7 @@ export default function Portfolio() {
           <h2 className="amount">{userHoldingsData.length}</h2>
           <p className="holding_text">Active Holdings</p>
         </div>
+      
       </div>
 
 

@@ -4,7 +4,7 @@ import { Brain, Power } from 'lucide-react';
 import ChatWindow from "../Components/ChatWindow";
 import LogoutPopup from "../Components/LogoutPopup";
 import LoggedOutUser from "../Components/Logout";
-import SearchStocksModal from "../Components/SearchStocksModal";
+import StockTokenModel from "../Components/StockTokenModel";
 import './Header.css';
 
 const Header = () => {
@@ -35,7 +35,7 @@ const Header = () => {
         </div>
       </div>
 
-      <SearchStocksModal open={searchPopupOpen} onClose={() => setSearchPopupOpen(false)} />
+      <StockTokenModel open={searchPopupOpen} onClose={() => setSearchPopupOpen(false)} />
       <button className="trade-button"  onClick={() => setSearchPopupOpen(true)}>
         Know Your Symbol
 

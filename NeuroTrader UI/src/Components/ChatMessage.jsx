@@ -94,7 +94,9 @@ export default function ChatMessage({ message }) {
         <div className="font_18"><b>Status:</b> {item.status}</div>
         <div className="font_18"><b>Order Status:</b> {item.orderstatus}</div>
         <div className="font_18"><b>Order type:</b> {item.orderType}</div>
-
+        <div className="font_18">
+          <b>{item.transactiontype === GlobalConstant.BUY ? "Buy Price:" : "Sell Price:"}</b> ₹{item.price}
+        </div>
         <div className="font_18"><b> Order Id:</b> {item.orderid}</div>
         <div className="font_18"><b>Transaction type:</b> {item.transactiontype}</div>
         {item.text && item.text.trim() !== "" && (

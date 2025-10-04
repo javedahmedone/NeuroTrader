@@ -39,7 +39,7 @@ const ChatWindow = ({ open, onClose }) => {
     setLoading(true); // ✅ Show loader overlay
 
     try {
-      debugger
+      
       let response = await AngelOneApiCollection.fetchUserPromtData(userMessage.text);
       console.log("AI Response:", response);
     if (

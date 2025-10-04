@@ -8,6 +8,7 @@ import Layout from "./Layout";
 import Order from "./Components/Order";
 import AngelOneSetupGuide from "./BrokerPages/AngelOne/AngelOneSetup";
 import UpstoxCallback from "./BrokerPages/Upstox/UpstoxCallback";
+import StockCandleChart from "./Components/StockChart";
 
 export default function App() {
   return (
@@ -18,6 +19,8 @@ export default function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/angelOneSetupGuide" element={<AngelOneSetupGuide />} />
         <Route path="/callback/upstox" element={<UpstoxCallback />} />
+        <Route path="/chart" element={<StockCandleChart />} />
+
 
         {/* Routes WITH header */}
         <Route element={<Layout />}>
