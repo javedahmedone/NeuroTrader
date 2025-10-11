@@ -25,7 +25,6 @@ export default function Portfolio() {
   const [searchPopupOpen, setSearchPopupOpen] = useState(false);
 
   useEffect(() => {
-    debugger
     if (hasFetched.current) return;
     hasFetched.current = true;
     const fetchAllData = async () => {
@@ -72,10 +71,15 @@ export default function Portfolio() {
 
   return (
     <div className="portfolio-container">
-        <div className="search-box"  onClick={() => setSearchPopupOpen(true)}>
+      <div class="search-box" onClick={() => setSearchPopupOpen(true)}>
+        <span class="search-icon">🔍</span>
+        <p class="search-text" contenteditable="true" id="searchField"></p>
+        <span class="grey">Search stock...</span>
+      </div>
+        {/* <div className="search-box"  onClick={() => setSearchPopupOpen(true)}>
           <i className="fa fa-search"></i>
-          <input type="text" placeholder="Search Stocks..." />
-        </div>
+          <p class="editable-p" contenteditable="true" data-placeholder="Search Stocks..."></p>
+        </div> */}
         <SearchStocksModal
         open={searchPopupOpen}
         onClose={() => setSearchPopupOpen(false)}

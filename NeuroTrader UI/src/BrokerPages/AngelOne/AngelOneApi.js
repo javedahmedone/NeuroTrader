@@ -58,6 +58,11 @@ const AngelOneApiCollection = {
   fetchUserOrders: () => fetchWithAuth("/portfolio/orders", { method: "GET" }),
   fetchStocks: (query) =>fetchWithoutAuth(`/stock/search?query=${encodeURIComponent(query)}`),
   fetchMarketMovers: () =>fetchWithoutAuth("/marketData/marketMovers", { method: "GET" }),
+  fetchMarketIsOpen:() =>fetchWithoutAuth("/marketData/time", { method: "GET" }),
+fetchStocksDataById: (stockSymbol, token, isin, interval) =>
+  fetchWithAuth(
+    `/marketData/stockDataById?stockSymbol=${encodeURIComponent(stockSymbol)}&token=${encodeURIComponent(token)}&isinNumber=${encodeURIComponent(isin)}&interval=${encodeURIComponent(interval)}`
+  ),
 
   cancelUserOrders: (cancelOrderRequestModel) =>
   fetchWithAuth("/portfolio/cancelOrder", {

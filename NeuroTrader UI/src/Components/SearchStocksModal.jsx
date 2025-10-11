@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
-import "../Styles/SearchStocksModal.css";
+import  { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AngelOneApiCollection from "../BrokerPages/AngelOne/AngelOneApi";
+import "../Styles/SearchStocksModal.css";
 import "../App.css";
 import { TrendingUp } from "lucide-react";
 
 const SearchStocksModal = ({ open, onClose }) => {
-  const [query, setQuery] = useState("");         // input text
-  const [suggestions, setSuggestions] = useState([]); // fetched stocks list
+const [query, setQuery] = useState("");         // input text
+const [suggestions, setSuggestions] = useState([]); // fetched stocks list
+const navigate = useNavigate();
 
   // ✅ Move this OUTSIDE of useEffect
   const handleStockClick = (stock) => {
     console.log("Clicked stock:", stock);
-
     const payload = {
-      symbol: stock.symbol,
-      company: stock.company_name,
+      stockSymbol: stock.stockSymbol,
+      stockName: stock.stockName,
       isin: stock.isinNumber,
       token: stock.token,
     };
-
-    // Example: send this payload somewhere
-    // sendStockData(payload);
+    navigate(`/stock/${stock.stockSymbol}`, { state: payload });
   };
 
   useEffect(() => {
@@ -85,8 +84,8 @@ const SearchStocksModal = ({ open, onClose }) => {
                 className="stock-item cursor-pointer"
                 onClick={() =>
                   handleStockClick({
-                    symbol: stock.stockSymbol,
-                    company_name: stock.stockName,
+                    stockSymbol: stock.stockSymbol,
+                    stockName: stock.stockName,
                     isinNumber: stock.isinNumber,
                     token: stock.stockToken,
                   })
